@@ -395,41 +395,41 @@
     countEl.className = 'char-count' + (len < min ? ' warn' : '');
   }
 
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBh7dQOPOBHn85c1BYk9WKgbWju9E-cMQIUgE7j33YKSdjSz6UKIv4M4E-w1YXMjxOtg/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWemIgH0KlbOpNZacpMBlT65Jl4R5ge77Ao7c4nf06pzO3-Br1flyyOWlx8JsrNvwTIw/exec';
 
-  document.getElementById('applyForm').addEventListener('submit', function(e) {
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.textContent = '제출 중...';
     btn.disabled = true;
 
     const form = e.target;
-    const formData = new FormData();
+    const params = new URLSearchParams();
     const inputs = form.querySelectorAll('input, textarea, select');
     inputs.forEach(input => {
       if (input.name) {
         if (input.type === 'radio') {
-          if (input.checked) formData.append(input.name, input.value);
+          if (input.checked) params.append(input.name, input.value);
         } else {
-          formData.append(input.name, input.value);
+          params.append(input.name, input.value);
         }
       }
     });
-    formData.append('신청일시', new Date().toLocaleString('ko-KR'));
+    params.append('신청일시', new Date().toLocaleString('ko-KR'));
 
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: formData
-    }).then(() => {
+    try {
+      await fetch(SCRIPT_URL + '?' + params.toString(), {
+        method: 'GET',
+        mode: 'no-cors'
+      });
       form.style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }).catch(() => {
+    } catch(err) {
       form.style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    }
   });
 </script>
 </body>
