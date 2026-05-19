@@ -382,55 +382,67 @@
   </form>
 </div>
 
-<script>
-  function countChar(el) {
-    const len = el.value.length;
-    const name = el.name;
-    const countEl = document.getElementById('count-' + name);
-    if (!countEl) return;
-    const min = parseInt(el.getAttribute('minlength')) || 0;
-    countEl.textContent = name === '소개글'
-      ? len + '자 / 150자 이상'
-      : len + '자';
-    countEl.className = 'char-count' + (len < min ? ' warn' : '');
-  }
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWemIgH0KlbOpNZacpMBlT65Jl4R5ge77Ao7c4nf06pzO3-Br1flyyOWlx8JsrNvwTIw/exec';
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdYQjs_BsPgo1PZ2TiF_sXgKIioHGYZjg",
+      authDomain: "learningcrew-4.firebaseapp.com",
+      projectId: "learningcrew-4",
+      storageBucket: "learningcrew-4.firebasestorage.app",
+      messagingSenderId: "673802856529",
+      appId: "1:673802856529:web:6406fae47bfd84d41af070"
+    };
 
-  document.getElementById('applyForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.textContent = '제출 중...';
-    btn.disabled = true;
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    const form = e.target;
-    const params = new URLSearchParams();
-    const inputs = form.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => {
-      if (input.name) {
-        if (input.type === 'radio') {
-          if (input.checked) params.append(input.name, input.value);
-        } else {
-          params.append(input.name, input.value);
+    function countChar(el) {
+      const len = el.value.length;
+      const name = el.name;
+      const countEl = document.getElementById('count-' + name);
+      if (!countEl) return;
+      const min = parseInt(el.getAttribute('minlength')) || 0;
+      countEl.textContent = name === '소개글'
+        ? len + '자 / 150자 이상'
+        : len + '자';
+      countEl.className = 'char-count' + (len < min ? ' warn' : '');
+    }
+    window.countChar = countChar;
+
+    document.getElementById('applyForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = '제출 중...';
+      btn.disabled = true;
+
+      const form = e.target;
+      const data = {};
+      const inputs = form.querySelectorAll('input, textarea, select');
+      inputs.forEach(input => {
+        if (input.name) {
+          if (input.type === 'radio') {
+            if (input.checked) data[input.name] = input.value;
+          } else {
+            data[input.name] = input.value;
+          }
         }
+      });
+      data['신청일시'] = new Date().toLocaleString('ko-KR');
+
+      try {
+        await addDoc(collection(db, 'applications'), data);
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch(err) {
+        alert('제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+        btn.textContent = '신청서 제출하기 →';
+        btn.disabled = false;
       }
     });
-    params.append('신청일시', new Date().toLocaleString('ko-KR'));
-
-    try {
-      await fetch(SCRIPT_URL + '?' + params.toString(), {
-        method: 'GET',
-        mode: 'no-cors'
-      });
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch(err) {
-      form.style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
