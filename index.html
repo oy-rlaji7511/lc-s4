@@ -68,20 +68,15 @@
       cursor: pointer; font-family: 'Pretendard', sans-serif; transition: all 0.2s; text-decoration: none; white-space: nowrap;
     }
     .btn-interview:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-1px); }
-
     .carousel-wrap {
       display: flex; align-items: center; gap: 12px;
       max-width: 1200px; margin: 0 auto; padding: 0 24px;
     }
     .carousel-viewport { flex: 1; overflow: hidden; }
-    .carousel-track {
-      display: flex; gap: 16px;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
+    .carousel-track { display: flex; gap: 16px; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .review-card {
       min-width: 300px; width: 300px; height: 180px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 14px; padding: 20px 24px; flex-shrink: 0; box-sizing: border-box;
       display: flex; flex-direction: column; justify-content: space-between;
     }
@@ -97,10 +92,7 @@
     }
     .carousel-btn:hover { background: var(--orange); border-color: var(--orange); }
     .carousel-dots { display: flex; justify-content: center; gap: 8px; padding: 20px 0 0; }
-    .carousel-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.2s;
-    }
+    .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.2s; }
     .carousel-dot.active { background: var(--orange); width: 20px; border-radius: 4px; }
 
     /* SECTION COMMON */
@@ -111,23 +103,25 @@
     .section-desc { font-size: 16px; color: var(--gray-mid); line-height: 1.8; max-width: 540px; word-break: keep-all; }
 
     /* STUDY TYPES */
-    .types-section { background: white; }
-    .types-header { margin-bottom: 32px; }
-    .types-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .types-section {
+      background: linear-gradient(180deg, #f4f3f2 0%, #ffe8d6 50%, #ffd4b8 100%);
+      padding: 72px 48px 80px;
+    }
+    .types-header { margin-bottom: 40px; }
+    .types-section .section-label { color: var(--orange); }
+    .types-section .section-title { color: var(--dark); }
+    .types-section .section-desc { color: #555; max-width: 700px; }
+    .types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1000px; margin: 0 auto; }
     .type-card {
-      border: none; border-radius: var(--radius); padding: 24px 20px;
-      transition: all 0.25s; position: relative; overflow: hidden;
-      background: #ffffff;
-      box-shadow: 4px 4px 10px rgba(0,0,0,0.12), -2px -2px 6px rgba(255,255,255,0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+      background: white; border-radius: 16px; padding: 32px 28px;
+      transition: all 0.25s; border: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
-    .type-card::before { display: none; }
-    .type-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 6px 6px 16px rgba(0,0,0,0.15), -2px -2px 8px rgba(255,255,255,0.9);
-    }
-    .type-card:hover::before { transform: scaleX(1); }
-    .type-icon { font-size: 40px; margin-bottom: 16px; }
-    .type-name { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .type-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
+    .type-icon { width: 56px; height: 56px; margin-bottom: 18px; }
+    .type-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--orange); }
+    .type-desc { font-size: 14px; color: #666; line-height: 1.7; }
+    .types-notice { margin-top: 20px; font-size: 14px; color: #999; max-width: 1000px; margin-left: auto; margin-right: auto; }
     .type-name span { color: var(--orange); }
     .type-desc { font-size: 14px; color: var(--gray-mid); line-height: 1.8; }
     .types-notice { margin-top: 24px; font-size: 13px; color: #999; font-weight: 500; }
@@ -239,29 +233,38 @@
     <div class="types-header">
       <p class="section-label">Study Types</p>
       <h2 class="section-title">스터디 유형</h2>
-      <p class="section-desc" style="font-size:17px; color:#555; max-width:700px;">업무 및 직무 수행에 필요한 주제로 선정하여, 목표에 따라 희망하는 <span style="color:var(--orange); font-weight:700;">스터디 유형</span>을 <span style="color:var(--orange); font-weight:700;">선택</span>하여 진행합니다.</p>
+      <p class="section-desc">업무 및 직무 수행에 필요한 주제로 선정하여, 목표에 따라 희망하는 <span style="color:var(--orange); font-weight:700; text-decoration:underline; text-underline-offset:3px;">스터디 유형</span>을 <span style="color:var(--orange); font-weight:700; text-decoration:underline; text-underline-offset:3px;">선택</span>하여 진행합니다.</p>
     </div>
     <div class="types-grid">
+
+      <!-- 자격취득형 -->
       <div class="type-card">
-        <div class="type-icon">🏅</div>
-        <div class="type-name"><span>자격취득형</span></div>
+        <img src="ICON1.png" class="type-icon" alt="자격취득형" />
+        <div class="type-name">자격취득형</div>
         <div class="type-desc">실무 관련 자격증 취득을 위한 학습</div>
       </div>
+
+      <!-- 업스킬링형 -->
       <div class="type-card">
-        <div class="type-icon">⚡</div>
-        <div class="type-name"><span>업스킬링형</span></div>
+        <img src="ICON2.png" class="type-icon" alt="업스킬링형" />
+        <div class="type-name">업스킬링형</div>
         <div class="type-desc">실무 스킬 향상을 위한 툴/지식 학습</div>
       </div>
+
+      <!-- 지식습득형 -->
       <div class="type-card">
-        <div class="type-icon">💡</div>
-        <div class="type-name"><span>지식습득형</span></div>
+        <img src="ICON3.png" class="type-icon" alt="지식습득형" />
+        <div class="type-name">지식습득형</div>
         <div class="type-desc">업무 트렌드/인사이트를 함께 학습</div>
       </div>
+
+      <!-- 사이드 프로젝트형 -->
       <div class="type-card">
-        <div class="type-icon">🛠</div>
-        <div class="type-name"><span>사이드 프로젝트형</span></div>
+        <img src="ICON4.png" class="type-icon" alt="사이드 프로젝트형" />
+        <div class="type-name">사이드 프로젝트형</div>
         <div class="type-desc">실무 프로젝트를 함께 기획/개발</div>
       </div>
+
     </div>
     <div class="types-notice">※ 어학 관련 스터디 개설 불가</div>
   </div>
