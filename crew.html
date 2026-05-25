@@ -11,7 +11,7 @@
       --orange: #FF6B2B;
       --orange-light: #FF8C55;
       --orange-pale: #FFF0E8;
-      --bg: #f2efea;
+      --bg: #efefef;
       --dark: #1A1A1A;
       --gray-mid: #888;
       --white: #fff;
@@ -25,7 +25,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 48px;
-      background: rgba(242,239,234,0.93);
+      background: rgba(239,239,239,0.93);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
@@ -96,7 +96,7 @@
       position: absolute; bottom: 16px; right: 16px;
       width: 28px; height: 28px; border-radius: 50%;
       background: var(--dark); color: white;
-      font-size: 12px; font-weight: 800;
+      font-size: 12px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
 
@@ -136,7 +136,7 @@
     .modal-section { margin-bottom: 28px; }
     .modal-section:last-child { margin-bottom: 0; }
     .modal-section-title {
-      font-size: 15px; font-weight: 800; color: var(--dark);
+      font-size: 15px; font-weight: 700; color: var(--dark);
       margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
     }
     .modal-section-title::before {
@@ -157,7 +157,7 @@
     .modal-footer { padding: 0 40px 32px; }
     .btn-apply {
       width: 100%; padding: 16px; background: var(--orange); color: white;
-      border: none; border-radius: 50px; font-size: 16px; font-weight: 800;
+      border: none; border-radius: 50px; font-size: 16px; font-weight: 700;
       cursor: pointer; font-family: 'Pretendard', sans-serif; transition: all 0.2s;
     }
     .btn-apply:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,43,0.3); }
@@ -176,7 +176,9 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">LEARNING CREW</a>
+  <a href="index.html" style="text-decoration:none;">
+    <img src="BI.png" alt="OLIVE YOUNG" style="height:22px; display:block;" />
+  </a>
   <a href="index.html" class="nav-back">← 메인으로</a>
 </nav>
 

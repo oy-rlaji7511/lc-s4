@@ -11,7 +11,7 @@
       --orange: #FF6B2B;
       --orange-light: #FF8C55;
       --orange-pale: #FFF0E8;
-      --bg: #f2efea;
+      --bg: #efefef;
       --dark: #1A1A1A;
       --gray-mid: #888;
       --white: #FFFFFF;
@@ -25,7 +25,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 48px;
-      background: rgba(242,239,234,0.93);
+      background: rgba(239,239,239,0.93);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
@@ -42,12 +42,13 @@
     .hero-banner { width: 100%; display: block; max-height: 600px; object-fit: cover; object-position: center; }
 
     /* INTRO */
-    .intro-section { background: var(--bg); padding: 0px 48px 72px; text-align: center; }
+    .intro-section { background: #efefef; padding: 0px 48px 72px; text-align: center; }
     .intro-section h2 {
-      font-size: clamp(17px, 2.2vw, 24px); font-weight: 700; line-height: 1.8;
+      font-size: clamp(14px, 1.8vw, 19px); font-weight: 700; line-height: 1.44;
       color: #444; word-break: keep-all; margin-bottom: 20px;
+      letter-spacing: 0.3px;
     }
-    .intro-section p { font-size: clamp(17px, 2vw, 22px); color: var(--gray-mid); line-height: 1.9; word-break: keep-all; font-weight: 500; }
+    .intro-section p { font-size: clamp(14px, 1.6vw, 18px); color: var(--gray-mid); line-height: 1.52; word-break: keep-all; font-weight: 500; letter-spacing: 0.3px; }
     .intro-section p strong { color: var(--orange); font-weight: 700; }
 
     /* REVIEW */
@@ -101,7 +102,7 @@
     }
     .type-card:hover::before { transform: scaleX(1); }
     .type-icon { font-size: 40px; margin-bottom: 16px; }
-    .type-name { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+    .type-name { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
     .type-name span { color: var(--orange); }
     .type-desc { font-size: 14px; color: var(--gray-mid); line-height: 1.8; }
     .types-notice { margin-top: 24px; font-size: 13px; color: #999; font-weight: 500; }
@@ -115,7 +116,7 @@
       width: 48px; height: 48px; background: var(--orange-pale); border-radius: 50%;
       display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 0 18px;
     }
-    .how-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; text-align: left; }
+    .how-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; text-align: left; }
     .how-title-divider { border: none; border-top: 2px solid var(--orange); width: 28px; margin: 0 0 18px; }
     .how-block { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-top: 1px solid #f0f0f0; }
     .how-block:first-of-type { border-top: none; padding-top: 0; }
@@ -124,7 +125,7 @@
       flex-shrink: 0; margin-top: 9px;
     }
     .how-block-body { flex: 1; }
-    .how-block-title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 3px; line-height: 1.5; word-break: keep-all; }
+    .how-block-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; line-height: 1.5; word-break: keep-all; }
     .how-block-desc { font-size: 14.5px; color: #999; line-height: 1.7; word-break: keep-all; margin-top: 3px; }
     .how-badge-wrap { margin: 14px 0 8px; }
     .how-badge {
@@ -182,8 +183,10 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">LEARNING CREW</div>
-  <a href="apply.html" class="nav-btn">크루장 지원하기 →</a>
+  <a href="index.html" style="text-decoration:none;">
+    <img src="BI.png" alt="OLIVE YOUNG" style="height:22px; display:block;" />
+  </a>
+  <a href="https://bit.ly/oy-learningcrew-leader" class="nav-btn">크루장 지원하기 →</a>
 </nav>
 
 <!-- HERO -->
@@ -371,7 +374,7 @@
 
     </div>
     <div style="text-align:center; margin-top: 52px;">
-      <a href="apply.html" class="btn-primary" style="font-size:18px; padding:18px 56px;">크루장 지원하기 →</a>
+      <a href="https://bit.ly/oy-learningcrew-leader" class="btn-primary" style="font-size:18px; padding:18px 56px;">크루장 지원하기 →</a>
       <div style="margin-top:20px;">
         <div class="cta-deadline">
           <span style="font-size:18px;">📅</span>
