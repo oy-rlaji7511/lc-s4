@@ -331,10 +331,10 @@
     document.getElementById('modalTitle').textContent = d.크루명 || '';
     document.getElementById('modalCrew').textContent = `${d.이름||''} · ${d.부서||''}`;
     document.getElementById('modalRecruit').textContent = d.총정원 || '-';
-    document.getElementById('modalIntro').textContent = d.소개글 || '';
-    document.getElementById('modalMidGoal').textContent = d.중간목표 || '';
-    document.getElementById('modalFinalGoal').textContent = d.최종목표 || '';
-    document.getElementById('modalReq').textContent = d.크루원요건 || '';
+    document.getElementById('modalIntro').innerHTML = (d.소개글||'').replace(/\n/g,'<br>');
+    document.getElementById('modalMidGoal').innerHTML = (d.중간목표||'').replace(/\n/g,'<br>');
+    document.getElementById('modalFinalGoal').innerHTML = (d.최종목표||'').replace(/\n/g,'<br>');
+    document.getElementById('modalReq').innerHTML = (d.크루원요건||'').replace(/\n/g,'<br>');
 
     const curr = [];
     if (d['1_4주차']) curr.push({ week: '1~4주차', content: d['1_4주차'] });
@@ -344,7 +344,7 @@
     document.getElementById('modalCurriculum').innerHTML = curr.map(c => `
       <div class="curriculum-item">
         <div class="curriculum-week">${c.week}</div>
-        <div class="curriculum-content">${c.content}</div>
+        <div class="curriculum-content">${c.content.replace(/\n/g,'<br>')}</div>
       </div>`).join('');
 
     document.getElementById('modalBg').classList.add('open');

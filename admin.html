@@ -24,7 +24,7 @@
       position: sticky; top: 0; z-index: 100;
     }
     .nav-logo { color: var(--orange); font-size: 18px; font-weight: 900; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
     .nav-count { font-size: 13px; color: rgba(255,255,255,0.5); }
     .nav-export {
       background: var(--orange); color: white; border: none; border-radius: 50px;
@@ -32,59 +32,93 @@
       font-family: 'Pretendard', sans-serif;
     }
 
-    .main { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
-    .page-title { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
-    .page-desc { font-size: 14px; color: var(--gray-mid); margin-bottom: 32px; }
+    .main { max-width: 1400px; margin: 0 auto; padding: 36px 24px; }
+    .page-title { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+    .page-desc { font-size: 13px; color: var(--gray-mid); margin-bottom: 28px; }
 
-    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; }
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .filter-btn {
-      padding: 7px 18px; border-radius: 50px; border: 1.5px solid #ddd;
+      padding: 6px 16px; border-radius: 50px; border: 1.5px solid #ddd;
       font-size: 13px; font-weight: 600; cursor: pointer; background: white;
-      font-family: 'Pretendard', sans-serif;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s;
     }
     .filter-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
 
     .table-wrap { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 900px; }
     thead { background: var(--dark); }
-    thead th { color: white; font-size: 12px; font-weight: 700; padding: 14px 16px; text-align: left; white-space: nowrap; }
+    thead th { color: white; font-size: 12px; font-weight: 700; padding: 12px 14px; text-align: left; white-space: nowrap; }
     tbody tr { border-bottom: 1px solid #f0f0f0; }
     tbody tr:hover { background: #fafafa; }
-    tbody td { padding: 14px 16px; font-size: 13px; vertical-align: middle; }
-    .td-date { color: var(--gray-mid); font-size: 12px; white-space: nowrap; }
-    .td-name { font-weight: 700; }
-    .type-chip { display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 700; background: var(--orange-pale); color: var(--orange); }
-    .status-chip { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; }
-    .status-pending { background: #f5f5f5; color: #888; }
-    .status-approved { background: #eafaf3; color: #1a9e5e; }
+    tbody td { padding: 10px 14px; font-size: 13px; vertical-align: middle; }
 
-    .action-btns { display: flex; gap: 6px; }
-    .btn-view { padding: 5px 12px; border-radius: 6px; border: 1px solid #ddd; font-size: 12px; font-weight: 600; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; }
-    .btn-view:hover { border-color: var(--orange); color: var(--orange); }
-    .btn-approve {
-      padding: 5px 12px; border-radius: 6px; border: 1.5px solid #ddd;
-      font-size: 12px; font-weight: 700; cursor: pointer;
-      font-family: 'Pretendard', sans-serif;
-      background: white; color: #aaa;
-      transition: all 0.2s;
-    }
-    .btn-approve:hover { border-color: var(--orange); color: var(--orange); background: var(--orange-pale); }
-    .btn-approved {
-      padding: 5px 12px; border-radius: 6px; border: none;
-      font-size: 12px; font-weight: 700; cursor: default;
-      background: var(--orange); color: white;
-    }
+    /* 두 줄 구조 */
+    .row-top td { padding-bottom: 4px; border-bottom: none; }
+    .row-bottom td { padding-top: 4px; font-size: 12px; color: var(--gray-mid); }
+    .row-bottom { border-bottom: 1px solid #f0f0f0 !important; }
+    .row-top:hover, .row-top:hover + .row-bottom { background: #fafafa; }
+    .row-bottom:hover { background: #fafafa; }
 
+    .td-num { font-weight: 900; color: var(--orange); font-size: 14px; text-align: center; width: 40px; }
+    .td-date { color: var(--gray-mid); font-size: 11px; white-space: nowrap; }
+    .td-name { font-weight: 800; font-size: 14px; }
+    .td-crew { font-weight: 700; font-size: 13px; }
+    .type-chip { display: inline-block; padding: 2px 8px; border-radius: 50px; font-size: 11px; font-weight: 700; background: var(--orange-pale); color: var(--orange); }
+    .history-chip { display: inline-block; padding: 2px 8px; border-radius: 50px; font-size: 11px; font-weight: 700; }
+    .history-yes { background: #eafaf3; color: #1a9e5e; }
+    .history-no { background: #f5f5f5; color: #aaa; }
+
+    /* 상태 버튼 */
+    .status-btns { display: flex; flex-direction: column; gap: 4px; }
+    .btn-recruit {
+      padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd;
+      font-size: 11px; font-weight: 700; cursor: pointer; background: white;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-recruit:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-recruit.active-recruit { background: var(--orange); color: white; border-color: var(--orange); }
+    .btn-close {
+      padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd;
+      font-size: 11px; font-weight: 700; cursor: pointer; background: white;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-close:hover { border-color: #555; color: #555; }
+    .btn-close.active-close { background: #555; color: white; border-color: #555; }
+
+    /* 관리 버튼 */
+    .manage-btns { display: flex; flex-direction: column; gap: 4px; }
+    .btn-edit {
+      padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd;
+      font-size: 11px; font-weight: 600; cursor: pointer; background: white;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-edit:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-memo {
+      padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd;
+      font-size: 11px; font-weight: 600; cursor: pointer; background: white;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-memo:hover { border-color: #4F46E5; color: #4F46E5; }
+    .btn-memo.has-memo { border-color: #4F46E5; background: #EEF2FF; color: #4F46E5; }
+
+    /* MODAL */
     .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
     .modal-bg.open { display: flex; }
     .modal { background: white; border-radius: 20px; padding: 36px 40px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; }
     .modal-close { position: absolute; top: 16px; right: 20px; font-size: 22px; cursor: pointer; color: var(--gray-mid); background: none; border: none; }
-    .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 24px; }
-    .modal-field { margin-bottom: 16px; }
-    .modal-label { font-size: 12px; font-weight: 700; color: var(--orange); margin-bottom: 6px; letter-spacing: 1px; display: block; }
-    .modal-input { width: 100%; padding: 10px 14px; border: 1.5px solid #EBEBEB; border-radius: 8px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; }
+    .modal-title { font-size: 18px; font-weight: 900; margin-bottom: 24px; }
+    .modal-field { margin-bottom: 14px; }
+    .modal-label { font-size: 12px; font-weight: 700; color: var(--orange); margin-bottom: 5px; letter-spacing: 1px; display: block; }
+    .modal-input { width: 100%; padding: 10px 14px; border: 1.5px solid #EBEBEB; border-radius: 8px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; transition: border-color 0.2s; }
     .modal-input:focus { border-color: var(--orange); }
-    .modal-save { width: 100%; padding: 14px; background: var(--orange); color: white; border: none; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 8px; }
+    .modal-save { width: 100%; padding: 14px; background: var(--orange); color: white; border: none; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 12px; transition: all 0.2s; }
+    .modal-save:hover { background: var(--orange-light); }
+
+    /* MEMO MODAL */
+    .memo-modal { background: white; border-radius: 20px; padding: 32px 36px; max-width: 480px; width: 90%; position: relative; }
+    .memo-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #EBEBEB; border-radius: 10px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; }
+    .memo-textarea:focus { border-color: #4F46E5; }
+    .memo-save { width: 100%; padding: 13px; background: #4F46E5; color: white; border: none; border-radius: 50px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 10px; }
 
     .empty-state { text-align: center; padding: 60px 24px; color: var(--gray-mid); font-size: 15px; }
   </style>
@@ -101,24 +135,27 @@
 
 <div class="main">
   <div class="page-title">크루장 신청 현황</div>
-  <div class="page-desc">신청일시 기준 최신순</div>
+  <div class="page-desc">신청일시 기준 최신순 · 행 클릭 시 상세 확인</div>
+
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterData('전체', this)">전체</button>
     <button class="filter-btn" onclick="filterData('대기중', this)">대기중</button>
-    <button class="filter-btn" onclick="filterData('승인완료', this)">승인완료</button>
+    <button class="filter-btn" onclick="filterData('모집중', this)">모집중</button>
+    <button class="filter-btn" onclick="filterData('마감', this)">마감</button>
   </div>
+
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
+          <th style="text-align:center;">순번</th>
           <th>신청일시</th>
-          <th>이름</th>
-          <th>부서</th>
-          <th>사번</th>
-          <th>크루명</th>
-          <th>유형</th>
+          <th>이름 / 사번</th>
+          <th>참여이력</th>
+          <th>크루명 / 유형</th>
           <th>총정원</th>
-          <th>상태</th>
+          <th>메모</th>
+          <th>모집상태</th>
           <th>관리</th>
         </tr>
       </thead>
@@ -129,12 +166,23 @@
   </div>
 </div>
 
+<!-- 상세/수정 모달 -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title">신청서 상세 / 수정</div>
     <div id="modalFields"></div>
     <button class="modal-save" onclick="saveModal()">수정 저장</button>
+  </div>
+</div>
+
+<!-- 메모 모달 -->
+<div class="modal-bg" id="memoBg">
+  <div class="memo-modal">
+    <button class="modal-close" onclick="closeMemo()">✕</button>
+    <div class="modal-title" style="font-size:16px; margin-bottom:16px;">📝 메모</div>
+    <textarea class="memo-textarea" id="memoText" placeholder="메모를 입력해 주세요..."></textarea>
+    <button class="memo-save" onclick="saveMemo()">메모 저장</button>
   </div>
 </div>
 
@@ -156,11 +204,11 @@
   let allData = [];
   let currentFilter = '전체';
   let currentDocId = null;
+  let memoDocId = null;
 
   const FIELDS = ['이름','부서','사번','참여여부','크루명','유형','활동기간',
     '중간목표','최종목표','1_4주차','5_8주차','9_12주차','교보재',
     '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드'];
-  const TEXTAREA_FIELDS = ['중간목표','최종목표','1_4주차','5_8주차','9_12주차','크루원요건','소개글'];
   const FIELD_LABELS = {
     '이름':'이름','부서':'부서','사번':'사번','참여여부':'참여여부','크루명':'크루명',
     '유형':'유형','활동기간':'활동기간','중간목표':'중간목표','최종목표':'최종목표',
@@ -168,6 +216,7 @@
     '총정원':'총정원','신규모집인원':'신규모집인원','사전구성인원':'사전구성인원',
     '크루원요건':'크루원요건','소개글':'소개글','키워드':'키워드'
   };
+  const TEXTAREA_FIELDS = ['중간목표','최종목표','1_4주차','5_8주차','9_12주차','크루원요건','소개글'];
 
   async function loadData() {
     try {
@@ -185,40 +234,65 @@
 
   function renderTable(data) {
     const tbody = document.getElementById('tableBody');
-    if (!data.length) { tbody.innerHTML = '<tr><td colspan="9" class="empty-state">신청 데이터가 없습니다.</td></tr>'; return; }
-    tbody.innerHTML = data.map(d => `
-      <tr>
-        <td class="td-date">${d.신청일시||'-'}</td>
-        <td class="td-name">${d.이름||'-'}</td>
-        <td>${d.부서||'-'}</td>
-        <td>${d.사번||'-'}</td>
-        <td>${d.크루명||'-'}</td>
-        <td><span class="type-chip">${d.유형||'-'}</span></td>
-        <td>${d.총정원||'-'}명</td>
-        <td><span class="status-chip ${d.status==='승인완료'?'status-approved':'status-pending'}">${d.status||'대기중'}</span></td>
-        <td>
-          <div class="action-btns">
-            <button class="btn-view" onclick="openModal('${d.id}')">상세/수정</button>
-            ${d.status==='승인완료'
-              ? `<button class="btn-approved">✓ 승인완료</button>`
-              : `<button class="btn-approve" onclick="approve('${d.id}')">승인확정</button>`}
-          </div>
-        </td>
-      </tr>`).join('');
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="9" class="empty-state">신청 데이터가 없습니다.</td></tr>';
+      return;
+    }
+
+    const rows = data.map((d, i) => {
+      const status = d.status || '대기중';
+      const hasMemo = d.memo && d.memo.trim() !== '';
+      return `
+        <tr class="row-top">
+          <td class="td-num" rowspan="2">${i + 1}</td>
+          <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
+          <td class="td-name">${d.이름||'-'}</td>
+          <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
+          <td class="td-crew">${d.크루명||'-'}</td>
+          <td rowspan="2">${d.총정원||'-'}명</td>
+          <td rowspan="2">
+            <button class="btn-memo ${hasMemo?'has-memo':''}" onclick="openMemo('${d.id}')">
+              ${hasMemo ? '📝 있음' : '메모'}
+            </button>
+          </td>
+          <td rowspan="2">
+            <div class="status-btns">
+              <button class="btn-recruit ${status==='모집중'?'active-recruit':''}" onclick="setStatus('${d.id}','모집중')">모집중</button>
+              <button class="btn-close ${status==='마감'?'active-close':''}" onclick="setStatus('${d.id}','마감')">마감</button>
+            </div>
+          </td>
+          <td rowspan="2">
+            <div class="manage-btns">
+              <button class="btn-edit" onclick="openModal('${d.id}')">상세/수정</button>
+            </div>
+          </td>
+        </tr>
+        <tr class="row-bottom">
+          <td>${d.사번||'-'}</td>
+          <td><span class="type-chip">${d.유형||'-'}</span></td>
+        </tr>`;
+    }).join('');
+    tbody.innerHTML = rows;
   }
 
   window.filterData = function(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderTable(filter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === filter));
+    const filtered = filter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === filter);
+    renderTable(filtered);
   };
 
-  window.approve = async function(id) {
-    if (!confirm('승인 확정하시겠어요? 크루원 모집 페이지에 게시됩니다.')) return;
-    await updateDoc(doc(db,'applications',id), { status: '승인완료' });
-    await loadData();
-    document.querySelector('.filter-btn.active').click();
+  window.setStatus = async function(id, status) {
+    const d = allData.find(x => x.id === id);
+    const current = d?.status || '대기중';
+    // 같은 버튼 누르면 대기중으로 초기화
+    const newStatus = current === status ? '대기중' : status;
+    await updateDoc(doc(db,'applications',id), { status: newStatus });
+    const idx = allData.findIndex(x => x.id === id);
+    if (idx !== -1) allData[idx].status = newStatus;
+    const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
+    renderTable(filtered);
   };
 
   window.openModal = function(id) {
@@ -226,7 +300,7 @@
     const d = allData.find(x => x.id === id);
     document.getElementById('modalFields').innerHTML = FIELDS.map(f => `
       <div class="modal-field">
-        <label class="modal-label">${FIELD_LABELS[f] || f}</label>
+        <label class="modal-label">${FIELD_LABELS[f]||f}</label>
         ${f === '유형' ? `<select class="modal-input" id="mf-${f}">
           <option ${d[f]==='사이드프로젝트형'?'selected':''}>사이드프로젝트형</option>
           <option ${d[f]==='자격취득형'?'selected':''}>자격취득형</option>
@@ -247,8 +321,7 @@
   window.saveModal = async function() {
     if (!currentDocId) return;
     const btn = document.querySelector('.modal-save');
-    btn.textContent = '저장 중...';
-    btn.disabled = true;
+    btn.textContent = '저장 중...'; btn.disabled = true;
     try {
       const updated = {};
       FIELDS.forEach(f => {
@@ -256,25 +329,52 @@
         if (el) updated[f] = el.value;
       });
       await updateDoc(doc(db,'applications',currentDocId), updated);
-      // 로컬 데이터도 즉시 업데이트
       const idx = allData.findIndex(x => x.id === currentDocId);
       if (idx !== -1) allData[idx] = { ...allData[idx], ...updated };
       alert('✅ 수정이 저장되었습니다!');
       closeModal();
-      renderTable(currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter));
+      const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
+      renderTable(filtered);
     } catch(err) {
-      alert('저장 중 오류가 발생했습니다: ' + err.message);
+      alert('저장 오류: ' + err.message);
     } finally {
-      btn.textContent = '수정 저장';
-      btn.disabled = false;
+      btn.textContent = '수정 저장'; btn.disabled = false;
     }
+  };
+
+  window.openMemo = function(id) {
+    memoDocId = id;
+    const d = allData.find(x => x.id === id);
+    document.getElementById('memoText').value = d?.memo || '';
+    document.getElementById('memoBg').classList.add('open');
+  };
+
+  window.closeMemo = function() {
+    document.getElementById('memoBg').classList.remove('open');
+    memoDocId = null;
+  };
+
+  window.saveMemo = async function() {
+    const memo = document.getElementById('memoText').value;
+    await updateDoc(doc(db,'applications',memoDocId), { memo });
+    const idx = allData.findIndex(x => x.id === memoDocId);
+    if (idx !== -1) allData[idx].memo = memo;
+    closeMemo();
+    const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
+    renderTable(filtered);
   };
 
   window.exportCSV = function() {
     if (!allData.length) { alert('데이터가 없습니다.'); return; }
-    const keys = [...FIELDS, '신청일시', 'status'];
-    const csv = [keys.join(','), ...allData.map(d =>
-      keys.map(k => `"${(d[k]||'').toString().replace(/"/g,'""')}"`).join(',')
+    const keys = ['신청일시','이름','사번','부서','참여여부','크루명','유형','활동기간',
+      '중간목표','최종목표','1_4주차','5_8주차','9_12주차','교보재',
+      '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드','status','memo'];
+    const labels = ['신청일시','이름','사번','부서','참여이력','크루명','유형','활동기간',
+      '중간목표','최종목표','1~4주차','5~8주차','9~12주차','교보재',
+      '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드','모집상태','메모'];
+    const csv = [labels.join(','), ...allData.map((d, i) =>
+      [(i+1), ...keys.map(k => `"${(d[k]||'').toString().replace(/"/g,'""')}"`)]
+      .join(',')
     )].join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
