@@ -139,7 +139,6 @@
 
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterData('전체', this)">전체</button>
-    <button class="filter-btn" onclick="filterData('대기중', this)">대기중</button>
     <button class="filter-btn" onclick="filterData('모집중', this)">모집중</button>
     <button class="filter-btn" onclick="filterData('마감', this)">마감</button>
   </div>
@@ -150,7 +149,7 @@
         <tr>
           <th style="text-align:center;">순번</th>
           <th>신청일시</th>
-          <th>이름 / 사번</th>
+          <th>이름 / 팀</th>
           <th>참여이력</th>
           <th>크루명 / 유형</th>
           <th>총정원</th>
@@ -248,8 +247,7 @@
           <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
           <td class="td-name">${d.이름||'-'}</td>
           <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
-          <td class="td-crew">${d.크루명||'-'}</td>
-          <td rowspan="2">${d.총정원||'-'}명</td>
+          <td class="td-crew">${d.크루명||'-'}</td>          <td rowspan="2">${d.총정원||'-'}명</td>
           <td rowspan="2">
             <button class="btn-memo ${hasMemo?'has-memo':''}" onclick="openMemo('${d.id}')">
               ${hasMemo ? '📝 있음' : '메모'}
@@ -268,7 +266,7 @@
           </td>
         </tr>
         <tr class="row-bottom">
-          <td>${d.사번||'-'}</td>
+          <td style="color:#888; font-size:12px;">${d.부서||'-'}</td>
           <td><span class="type-chip">${d.유형||'-'}</span></td>
         </tr>`;
     }).join('');
@@ -369,12 +367,14 @@
     const keys = ['신청일시','이름','사번','부서','참여여부','크루명','유형','활동기간',
       '중간목표','최종목표','1_4주차','5_8주차','9_12주차','교보재',
       '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드','status','memo'];
-    const labels = ['신청일시','이름','사번','부서','참여이력','크루명','유형','활동기간',
+    const labels = ['순번','신청일시','이름','사번','부서','참여이력','크루명','유형','활동기간',
       '중간목표','최종목표','1~4주차','5~8주차','9~12주차','교보재',
       '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드','모집상태','메모'];
     const csv = [labels.join(','), ...allData.map((d, i) =>
-      [(i+1), ...keys.map(k => `"${(d[k]||'').toString().replace(/"/g,'""')}"`)]
-      .join(',')
+      [`"${i+1}"`, ...keys.map(k => {
+        const val = (d[k]||'').toString().replace(/"/g,'""');
+        return `"${val}"`;
+      })].join(',')
     )].join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
