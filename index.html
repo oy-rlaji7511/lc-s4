@@ -227,71 +227,6 @@
   <p>평소 깊이 있게 학습하고 싶었던 주제로 직접 스터디를 개설하고<br>크루를 리드해줄 <strong>크루장</strong>을 기다립니다!</p>
 </div>
 
-<!-- REVIEW -->
-<div class="review-section">
-  <div class="review-header">
-    <div>
-      <p class="review-label">CREW REVIEWS</p>
-      <h3>러닝크루에 참여한 영메이커의 생생한 후기</h3>
-    </div>
-  </div>
-
-  <!-- 캐러셀 -->
-  <div class="carousel-wrap">
-    <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)">&#8249;</button>
-    <div class="carousel-viewport">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="review-card"><div class="quote">"</div><div class="text">스터디라는 적절한 강제성이 학습 동기부여가 되었고, AI에 대한 막연한 FOMO도 러닝크루를 통해 자신감으로 바뀌었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">혼자 나서는 분위기가 아니라 모두가 함께 참여하고 서로 도우며 배우는 과정이 좋았습니다. 다른 크루원의 작업물을 보며 새로운 아이디어도 얻을 수 있었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">업무에 필요한 스킬을 따로 공부하기 어려웠는데, 실제 업무에 적용하며 빠르게 익힐 수 있었고 편안한 분위기 속에서 함께 성장할 수 있었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">AI 업무자동화 러닝크루를 통해 다양한 AI 툴을 배우고 실제 업무 활용 포인트를 얻을 수 있었습니다. 업무와 자기개발 측면 모두 만족도가 높은 프로그램이었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">동료들과 함께 공부하며 다양한 의견을 나누는 과정에서 서비스에 적용할 수 있는 아이디어까지 확장할 수 있어 좋았습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">평소 필요성을 느끼던 AI 관련 학습을 러닝크루를 통해 꾸준히 이어갈 수 있었고, 같은 직무 크루원들과 함께하며 더 큰 시너지를 느낄 수 있었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">수료 목표가 있어 학습 현황을 체크하고, 크루원들과 함께 끝까지 참여할 수 있도록 동기부여가 되었습니다.</div><div class="quote-close">"</div></div>
-        <div class="review-card"><div class="quote">"</div><div class="text">운영 담당자분의 빠른 답변과 친절한 안내 덕분에 러닝크루에 더욱 몰입해 참여할 수 있었습니다.</div><div class="quote-close">"</div></div>
-      </div>
-    </div>
-    <button class="carousel-btn carousel-next" onclick="moveCarousel(1)">&#8250;</button>
-  </div>
-
-  <!-- 인디케이터 -->
-  <div class="carousel-dots" id="carouselDots"></div>
-
-  <!-- 맨 아래 인터뷰 버튼 -->
-  <div style="text-align:center; padding: 24px 0 48px;">
-    <a href="http://cj.cj.net/PT/PortalBuilder/Framework/contents_link.aspx?CONTENTS_ID=EPCT4153&q=fb93846d4e5f3ac334cd08d275a35c78d951805c201294b5d8902022f0c491d45d40debfeb2b8993" target="_blank" class="btn-interview">크루 인터뷰 보러가기 →</a>
-  </div>
-</div>
-
-<script>
-  const cards = document.querySelectorAll('.review-card');
-  const track = document.getElementById('carouselTrack');
-  const dotsWrap = document.getElementById('carouselDots');
-  const cardWidth = 300 + 16; // 카드 width + gap
-  let current = 0;
-  const total = cards.length;
-
-  // 도트 생성
-  cards.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goTo(i);
-    dotsWrap.appendChild(dot);
-  });
-
-  function goTo(idx) {
-    current = (idx + total) % total;
-    track.style.transform = `translateX(-${current * cardWidth}px)`;
-    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
-  }
-
-  window.moveCarousel = function(dir) {
-    goTo(current + dir);
-  };
-</script>
-
 <!-- STUDY TYPES -->
 <section class="types-section" id="types">
   <div class="section-inner">
@@ -326,6 +261,65 @@
   </div>
 </section>
 
+<!-- REVIEW 롤링 -->
+<div class="review-section">
+  <div class="review-header">
+    <div>
+      <p class="review-label">CREW REVIEWS</p>
+      <h3>러닝크루에 참여한 영메이커의 생생한 후기</h3>
+    </div>
+  </div>
+  <div class="carousel-wrap">
+    <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)">&#8249;</button>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="review-card"><div class="quote">"</div><div class="text">스터디라는 적절한 강제성이 학습 동기부여가 되었고, AI에 대한 막연한 FOMO도 러닝크루를 통해 자신감으로 바뀌었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">혼자 나서는 분위기가 아니라 모두가 함께 참여하고 서로 도우며 배우는 과정이 좋았습니다. 다른 크루원의 작업물을 보며 새로운 아이디어도 얻을 수 있었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">업무에 필요한 스킬을 따로 공부하기 어려웠는데, 실제 업무에 적용하며 빠르게 익힐 수 있었고 편안한 분위기 속에서 함께 성장할 수 있었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">AI 업무자동화 러닝크루를 통해 다양한 AI 툴을 배우고 실제 업무 활용 포인트를 얻을 수 있었습니다. 업무와 자기개발 측면 모두 만족도가 높은 프로그램이었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">동료들과 함께 공부하며 다양한 의견을 나누는 과정에서 서비스에 적용할 수 있는 아이디어까지 확장할 수 있어 좋았습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">평소 필요성을 느끼던 AI 관련 학습을 러닝크루를 통해 꾸준히 이어갈 수 있었고, 같은 직무 크루원들과 함께하며 더 큰 시너지를 느낄 수 있었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">수료 목표가 있어 학습 현황을 체크하고, 크루원들과 함께 끝까지 참여할 수 있도록 동기부여가 되었습니다.</div><div class="quote-close">"</div></div>
+        <div class="review-card"><div class="quote">"</div><div class="text">운영 담당자분의 빠른 답변과 친절한 안내 덕분에 러닝크루에 더욱 몰입해 참여할 수 있었습니다.</div><div class="quote-close">"</div></div>
+      </div>
+    </div>
+    <button class="carousel-btn carousel-next" onclick="moveCarousel(1)">&#8250;</button>
+  </div>
+  <div class="carousel-dots" id="carouselDots"></div>
+  <div style="text-align:center; padding: 24px 0 48px;">
+    <a href="http://cj.cj.net/PT/PortalBuilder/Framework/contents_link.aspx?CONTENTS_ID=EPCT4153&q=fb93846d4e5f3ac334cd08d275a35c78d951805c201294b5d8902022f0c491d45d40debfeb2b8993" target="_blank" class="btn-interview">크루 인터뷰 보러가기 →</a>
+  </div>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.review-card');
+  const track = document.getElementById('carouselTrack');
+  const dotsWrap = document.getElementById('carouselDots');
+  const cardWidth = 300 + 16;
+  let current = 0;
+  const total = cards.length;
+
+  cards.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsWrap.appendChild(dot);
+  });
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * cardWidth}px)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  window.moveCarousel = function(dir) { goTo(current + dir); };
+
+  // 자동 롤링 4초
+  setInterval(() => goTo(current + 1), 4000);
+</script>
+
 <!-- HOW IT WORKS -->
 <section class="how-section">
   <div class="section-inner">
@@ -338,37 +332,11 @@
         <div class="how-icon">📖</div>
         <div class="how-title">학습 방법</div>
         <hr class="how-title-divider">
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">사내·외 전문가 초청</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">온/오프라인 강의 수강</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">도서·교재 활용</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">업무 Tool 활용 실습</div>
-            <div class="how-block-desc">AI, 데이터 분석 툴 등</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">실무 연계 사이드 프로젝트 진행</div>
-          </div>
-        </div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">사내·외 전문가 초청</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">온/오프라인 강의 수강</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">도서·교재 활용</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">업무 Tool 활용 실습</div><div class="how-block-desc">AI, 데이터 분석 툴 등</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">실무 연계 사이드 프로젝트 진행</div></div></div>
       </div>
 
       <!-- 스터디 지원 -->
@@ -376,20 +344,8 @@
         <div class="how-icon">🎁</div>
         <div class="how-title">스터디 지원</div>
         <hr class="how-title-divider">
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">첫모임 밍글비 1회 제공</div>
-            <div class="how-block-desc">크루 운영 예산 외 별도 제공<br>1인당 1.5만 원 한도, 초기 크루원 네트워킹을 위한 식사·다과 비용 지원</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">크루당 총 50만 원 학습 예산 지원</div>
-            <div class="how-block-desc">사내·외 전문가/현직자 초청비<br>학습 활동 비용 (강의, 도서비, 시험 응시료 포함)</div>
-          </div>
-        </div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">첫모임 밍글비 1회 제공</div><div class="how-block-desc">크루 운영 예산 외 별도 제공<br>1인당 1.5만 원 한도, 초기 크루원 네트워킹을 위한 식사·다과 비용 지원</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">크루당 총 50만 원 학습 예산 지원</div><div class="how-block-desc">사내·외 전문가/현직자 초청비<br>학습 활동 비용 (강의, 도서비, 시험 응시료 포함)</div></div></div>
       </div>
 
       <!-- 수료 기준 -->
@@ -397,28 +353,14 @@
         <div class="how-icon">🏆</div>
         <div class="how-title">수료 기준</div>
         <hr class="how-title-divider">
-
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">스터디 기간 절반, 8회 이상 진행</div>
-            <div class="how-block-desc">진행시간 1시간 이상, 크루원 70% 이상 참석 시 1회 인정</div>
-          </div>
-        </div>
-        <div class="how-block">
-          <div class="how-block-icon"></div>
-          <div class="how-block-body">
-            <div class="how-block-title">크루 중간/최종 목표 달성 인증</div>
-          </div>
-        </div>
-
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">스터디 기간 절반, 8회 이상 진행</div><div class="how-block-desc">진행시간 1시간 이상, 크루원 70% 이상 참석 시 1회 인정</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">크루 중간/최종 목표 달성 인증</div></div></div>
         <div class="how-block" style="border-top: 1px solid #f0f0f0; padding-left: 17px;">
           <div class="how-block-body">
             <span style="display:inline-block; background:#eafaf3; color:#1a9e5e; font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px; margin-bottom:6px;">수료 혜택</span>
             <div class="how-block-title">최종 수료 시 회식비 인당 3만 원 지급</div>
           </div>
         </div>
-
         <div class="how-block" style="border-top: 1px solid #f0f0f0; padding-top:13px; margin-top:4px; justify-content: flex-end;">
           <div class="how-block-body" style="text-align: right;">
             <div class="how-block-desc" style="color:#bbb; font-size:12px;">※ 미수료 시 다음 시즌 1회 참여 제한</div>
