@@ -278,12 +278,12 @@
 
   async function loadCrews() {
     try {
-      const q = query(collection(db, 'applications'), where('status', '==', '승인완료'));
+      const q = query(collection(db, 'applications'), where('status', '==', '모집중'));
       const snap = await getDocs(q);
       allCrews = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     } catch {
       const snap = await getDocs(collection(db, 'applications'));
-      allCrews = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(d => d.status === '승인완료');
+      allCrews = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(d => d.status === '모집중');
     }
     renderCrews(allCrews);
   }
