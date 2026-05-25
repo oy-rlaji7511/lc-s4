@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>크루원 지원하기 — 러닝크루 시즌4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --orange: #FF6B2B;
+      --orange-light: #FF8C55;
+      --orange-pale: #FFF0E8;
+      --bg: #f2efea;
+      --dark: #1A1A1A;
+      --gray-mid: #888;
+      --white: #fff;
+      --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--dark); font-size: 120%; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(242,239,234,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; color: var(--orange); text-decoration: none; }
+    .nav-back { font-size: 14px; font-weight: 600; color: var(--gray-mid); text-decoration: none; }
+    .nav-back:hover { color: var(--orange); }
+
+    /* HERO */
+    .hero {
+      background: var(--dark);
+      padding: 110px 48px 52px;
+    }
+    .hero-inner { max-width: 760px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-block; background: var(--orange); color: white;
+      font-size: 12px; font-weight: 700; padding: 5px 16px;
+      border-radius: 50px; margin-bottom: 20px; letter-spacing: 1px;
+    }
+    .hero h1 { font-size: clamp(22px, 3vw, 32px); font-weight: 900; color: white; line-height: 1.35; margin-bottom: 28px; }
+    .hero h1 span { color: var(--orange); }
+
+    .info-blocks { display: flex; flex-direction: column; gap: 20px; }
+    .info-block { }
+    .info-title {
+      font-size: 14px; font-weight: 800; color: var(--orange);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+    }
+    .info-item {
+      font-size: 13px; color: rgba(255,255,255,0.65);
+      line-height: 1.8; padding-left: 12px; word-break: keep-all;
+    }
+    .info-item::before { content: '* '; color: var(--orange); }
+    .info-notice {
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      margin-top: 6px; padding-left: 12px; word-break: keep-all;
+    }
+
+    /* FORM */
+    .form-wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .form-card {
+      background: white; border-radius: var(--radius);
+      padding: 32px 36px; margin-bottom: 20px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .form-card-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange); margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 1px solid #f0f0f0;
+    }
+
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 8px; display: block; word-break: keep-all; }
+    .field-label .required { color: var(--orange); margin-left: 3px; }
+    .field-desc { font-size: 12px; color: #aaa; margin-bottom: 8px; line-height: 1.6; word-break: keep-all; }
+
+    input[type="text"], textarea, select {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid #EBEBEB; border-radius: 10px;
+      font-size: 14px; font-family: 'Pretendard', sans-serif;
+      color: var(--dark); background: #fafafa;
+      transition: border-color 0.2s; outline: none; resize: none;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--orange); background: white; }
+    input::placeholder, textarea::placeholder { color: #ccc; }
+    input[readonly] { background: #f5f5f5; color: var(--gray-mid); cursor: default; border-color: #e8e8e8; }
+
+    .radio-group { display: flex; gap: 16px; flex-wrap: wrap; }
+    .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .radio-item input[type="radio"] { display: none; }
+    .radio-box {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid #ddd; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .radio-item input[type="radio"]:checked + .radio-box { border-color: var(--orange); }
+    .radio-item input[type="radio"]:checked + .radio-box::after {
+      content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--orange);
+    }
+    .radio-label { font-size: 14px; font-weight: 500; }
+
+    .char-count { font-size: 12px; color: #bbb; text-align: right; margin-top: 4px; }
+    .char-count.warn { color: var(--orange); font-weight: 700; }
+
+    .crew-name-display {
+      width: 100%; padding: 14px 16px;
+      background: var(--orange-pale); border: 1.5px solid var(--orange);
+      border-radius: 10px; font-size: 15px; font-weight: 800; color: var(--orange);
+    }
+
+    .submit-wrap { text-align: center; padding-top: 8px; }
+    .btn-submit {
+      background: var(--orange); color: white; border: none;
+      border-radius: 50px; padding: 18px 64px;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s; width: 100%;
+    }
+    .btn-submit:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,43,0.3); }
+
+    .success-msg {
+      display: none; text-align: center; padding: 60px 24px;
+      background: white; border-radius: var(--radius);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+    .success-msg .icon { font-size: 52px; margin-bottom: 20px; }
+    .success-msg h2 { font-size: 22px; font-weight: 900; margin-bottom: 12px; }
+    .success-msg p { font-size: 15px; color: var(--gray-mid); line-height: 1.8; word-break: keep-all; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="crew.html" class="nav-logo">LEARNING CREW</a>
+  <a href="crew.html" class="nav-back">← 크루 목록으로</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">시즌 4 크루원 모집</div>
+    <h1>러닝크루 <span>크루원</span> 지원하기</h1>
+    <div class="info-blocks">
+      <div class="info-block">
+        <div class="info-title">📆 모집 기간</div>
+        <div class="info-item">6/17(수) ~ 6/25(월) 6PM 까지</div>
+      </div>
+      <div class="info-block">
+        <div class="info-title">📝 참여 전 꼭 확인해 주세요!</div>
+        <div class="info-item">러닝크루 시즌당 한 개의 크루에만 참여할 수 있습니다. (중복 지원 불가)</div>
+        <div class="info-item">개인 업무 일정 및 학습기간을 고려해 지원해, 끝까지 완주할 수 있는 스터디 주제로 지원해 주세요.</div>
+      </div>
+      <div class="info-block">
+        <div class="info-title">📬 결과 안내</div>
+        <div class="info-item">응답 제출 시 크루원 지원이 완료되며, 작성하신 내용을 바탕으로 크루장이 함께 스터디할 크루원을 선정할 예정입니다.</div>
+        <div class="info-notice">※ 모집 결과는 개별적으로 안내드릴 예정입니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <div class="success-msg" id="successMsg">
+    <div class="icon">🎉</div>
+    <h2>지원이 완료되었습니다!</h2>
+    <p>크루원 지원해 주셔서 감사합니다.<br>모집 결과는 개별적으로 안내드릴 예정입니다.</p>
+  </div>
+
+  <form id="applyForm">
+
+    <!-- 지원 크루 -->
+    <div class="form-card">
+      <div class="form-card-title">지원 크루</div>
+      <div class="field">
+        <label class="field-label">지원 크루명 <span class="required">*</span></label>
+        <div class="crew-name-display" id="crewNameDisplay">크루명을 불러오는 중...</div>
+        <input type="hidden" name="지원크루명" id="crewNameInput" />
+      </div>
+    </div>
+
+    <!-- 기본 정보 -->
+    <div class="form-card">
+      <div class="form-card-title">기본 정보</div>
+      <div class="field">
+        <label class="field-label">부서 <span class="required">*</span></label>
+        <input type="text" name="부서" placeholder="소속 부서를 입력해 주세요" required />
+      </div>
+      <div class="field">
+        <label class="field-label">이름 <span class="required">*</span></label>
+        <input type="text" name="이름" placeholder="이름을 입력해 주세요" required />
+      </div>
+      <div class="field">
+        <label class="field-label">사번 <span class="required">*</span></label>
+        <input type="text" name="사번" placeholder="사번을 입력해 주세요" required />
+      </div>
+      <div class="field">
+        <label class="field-label">러닝크루 참여 여부 <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="참여여부" value="있음" required />
+            <span class="radio-box"></span>
+            <span class="radio-label">있음</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="참여여부" value="없음" />
+            <span class="radio-box"></span>
+            <span class="radio-label">없음</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지원 동기 -->
+    <div class="form-card">
+      <div class="form-card-title">지원 동기</div>
+      <div class="field">
+        <label class="field-label">신청하신 러닝크루 주제가 본인의 업무와 역량 향상에 어떻게 적용될 수 있을지 구체적으로 작성해 주세요. <span class="required">*</span></label>
+        <div class="field-desc">예시. 러닝크루를 통해 데이터 분석의 기초적인 흐름을 익히고, 혼자서는 어려웠던 데이터 전처리와 시각화 과정을 실습을 통해 배우고 싶습니다. 학습을 통해 쌓은 분석 역량을 바탕으로, 실제 수행 중인 마케팅 실적 리포트 정리나 예산 산정·집행 과정에 적용하여 업무 효율과 정확성을 높이고자 합니다.</div>
+        <textarea name="지원동기" rows="6" placeholder="구체적으로 작성해 주세요 (100자 이상)" minlength="100" required oninput="countChar(this)"></textarea>
+        <div class="char-count" id="count-지원동기">0자 / 100자 이상</div>
+      </div>
+    </div>
+
+    <!-- 제출 -->
+    <div class="submit-wrap">
+      <button type="submit" class="btn-submit" id="submitBtn">지원서 제출하기 →</button>
+    </div>
+  </form>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAdYQjs_BsPgo1PZ2TiF_sXgKIioHGYZjg",
+    authDomain: "learningcrew-4.firebaseapp.com",
+    projectId: "learningcrew-4",
+    storageBucket: "learningcrew-4.firebasestorage.app",
+    messagingSenderId: "673802856529",
+    appId: "1:673802856529:web:6406fae47bfd84d41af070"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // URL에서 크루명 가져오기
+  const params = new URLSearchParams(window.location.search);
+  const crewName = params.get('crew') || '';
+  document.getElementById('crewNameDisplay').textContent = crewName || '크루명을 찾을 수 없습니다.';
+  document.getElementById('crewNameInput').value = crewName;
+
+  // 글자수 카운터
+  window.countChar = function(el) {
+    const len = el.value.length;
+    const countEl = document.getElementById('count-지원동기');
+    if (!countEl) return;
+    countEl.textContent = len + '자 / 100자 이상';
+    countEl.className = 'char-count' + (len < 100 ? ' warn' : '');
+  };
+
+  // 제출
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '제출 중...';
+    btn.disabled = true;
+
+    const form = e.target;
+    const data = {};
+    const inputs = form.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      if (input.name) {
+        if (input.type === 'radio') {
+          if (input.checked) data[input.name] = input.value;
+        } else {
+          data[input.name] = input.value;
+        }
+      }
+    });
+    data['신청일시'] = new Date().toLocaleString('ko-KR');
+
+    try {
+      await addDoc(collection(db, 'member_applications'), data);
+      form.style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(err) {
+      alert('제출 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      btn.textContent = '지원서 제출하기 →';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

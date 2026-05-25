@@ -245,7 +245,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn-apply" onclick="alert('크루 신청 페이지는 준비 중입니다!')">크루원 지원하기 →</button>
+      <button class="btn-apply" onclick="goApply()">크루원 지원하기 →</button>
     </div>
   </div>
 </div>
@@ -349,6 +349,11 @@
 
     document.getElementById('modalBg').classList.add('open');
     document.body.style.overflow = 'hidden';
+  };
+
+  window.goApply = function() {
+    const crewName = document.getElementById('modalTitle').textContent;
+    window.location.href = 'member-apply.html?crew=' + encodeURIComponent(crewName);
   };
 
   window.closeModal = function() {

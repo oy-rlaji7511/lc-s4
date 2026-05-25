@@ -32,6 +32,19 @@
       font-family: 'Pretendard', sans-serif;
     }
 
+    /* 탭 */
+    .tab-bar {
+      background: var(--dark); padding: 0 40px;
+      display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .tab-btn {
+      padding: 14px 28px; font-size: 14px; font-weight: 700;
+      color: rgba(255,255,255,0.4); cursor: pointer; border: none;
+      background: none; font-family: 'Pretendard', sans-serif;
+      border-bottom: 3px solid transparent; transition: all 0.2s;
+    }
+    .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
     .main { max-width: 1400px; margin: 0 auto; padding: 36px 24px; }
     .page-title { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
     .page-desc { font-size: 13px; color: var(--gray-mid); margin-bottom: 28px; }
@@ -44,6 +57,7 @@
     }
     .filter-btn.active { background: var(--orange); color: white; border-color: var(--orange); }
 
+    /* 크루장 테이블 */
     .table-wrap { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; min-width: 900px; }
     thead { background: var(--dark); }
@@ -51,14 +65,10 @@
     tbody tr { border-bottom: 1px solid #f0f0f0; }
     tbody tr:hover { background: #fafafa; }
     tbody td { padding: 10px 14px; font-size: 13px; vertical-align: middle; }
-
-    /* 두 줄 구조 */
     .row-top td { padding-bottom: 4px; border-bottom: none; }
     .row-bottom td { padding-top: 4px; font-size: 12px; color: var(--gray-mid); }
     .row-bottom { border-bottom: 1px solid #f0f0f0 !important; }
     .row-top:hover, .row-top:hover + .row-bottom { background: #fafafa; }
-    .row-bottom:hover { background: #fafafa; }
-
     .td-num { font-weight: 900; color: var(--orange); font-size: 14px; text-align: center; width: 40px; }
     .td-date { color: var(--gray-mid); font-size: 11px; white-space: nowrap; }
     .td-name { font-weight: 800; font-size: 14px; }
@@ -67,39 +77,67 @@
     .history-chip { display: inline-block; padding: 2px 8px; border-radius: 50px; font-size: 11px; font-weight: 700; }
     .history-yes { background: #eafaf3; color: #1a9e5e; }
     .history-no { background: #f5f5f5; color: #aaa; }
+    .applicant-count {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #EEF2FF; color: #4F46E5;
+      padding: 3px 10px; border-radius: 50px; font-size: 11px; font-weight: 700;
+    }
 
-    /* 상태 버튼 */
     .status-btns { display: flex; flex-direction: column; gap: 4px; }
-    .btn-recruit {
-      padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd;
-      font-size: 11px; font-weight: 700; cursor: pointer; background: white;
-      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
-    }
-    .btn-recruit:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-recruit { padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd; font-size: 11px; font-weight: 700; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .btn-recruit.active-recruit { background: var(--orange); color: white; border-color: var(--orange); }
-    .btn-close {
-      padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd;
-      font-size: 11px; font-weight: 700; cursor: pointer; background: white;
-      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
-    }
-    .btn-close:hover { border-color: #555; color: #555; }
+    .btn-close { padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd; font-size: 11px; font-weight: 700; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .btn-close.active-close { background: #555; color: white; border-color: #555; }
-
-    /* 관리 버튼 */
     .manage-btns { display: flex; flex-direction: column; gap: 4px; }
-    .btn-edit {
-      padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd;
-      font-size: 11px; font-weight: 600; cursor: pointer; background: white;
-      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
-    }
+    .btn-edit { padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; }
     .btn-edit:hover { border-color: var(--orange); color: var(--orange); }
-    .btn-memo {
-      padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd;
-      font-size: 11px; font-weight: 600; cursor: pointer; background: white;
-      font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap;
-    }
-    .btn-memo:hover { border-color: #4F46E5; color: #4F46E5; }
+    .btn-memo { padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; }
     .btn-memo.has-memo { border-color: #4F46E5; background: #EEF2FF; color: #4F46E5; }
+
+    /* 크루원 신청현황 칸반 */
+    .kanban-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+    }
+    .kanban-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .kanban-col {
+      background: white; border-radius: var(--radius);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
+    }
+    .kanban-col-header {
+      padding: 16px 20px; background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .kanban-col-title { font-size: 14px; font-weight: 800; color: white; word-break: keep-all; }
+    .kanban-col-count {
+      background: var(--orange); color: white;
+      font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 50px;
+      white-space: nowrap;
+    }
+    .kanban-col-body { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .kanban-col-footer { padding: 12px; border-top: 1px solid #f0f0f0; }
+    .btn-csv-crew {
+      width: 100%; padding: 8px; background: var(--orange-pale); color: var(--orange);
+      border: 1px solid var(--orange); border-radius: 8px;
+      font-size: 12px; font-weight: 700; cursor: pointer;
+      font-family: 'Pretendard', sans-serif; transition: all 0.2s;
+    }
+    .btn-csv-crew:hover { background: var(--orange); color: white; }
+
+    .applicant-card {
+      background: #fafafa; border-radius: 10px; padding: 12px 14px;
+      border: 1px solid #f0f0f0;
+    }
+    .applicant-card-name { font-size: 14px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+    .applicant-card-info { font-size: 12px; color: var(--gray-mid); line-height: 1.7; }
+    .applicant-card-info span { display: block; }
+    .applicant-card-motivation {
+      font-size: 12px; color: #555; line-height: 1.6;
+      margin-top: 8px; padding-top: 8px; border-top: 1px solid #ebebeb;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .empty-state { text-align: center; padding: 40px 16px; color: var(--gray-mid); font-size: 13px; }
 
     /* MODAL */
     .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
@@ -111,16 +149,11 @@
     .modal-label { font-size: 12px; font-weight: 700; color: var(--orange); margin-bottom: 5px; letter-spacing: 1px; display: block; }
     .modal-input { width: 100%; padding: 10px 14px; border: 1.5px solid #EBEBEB; border-radius: 8px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; transition: border-color 0.2s; }
     .modal-input:focus { border-color: var(--orange); }
-    .modal-save { width: 100%; padding: 14px; background: var(--orange); color: white; border: none; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 12px; transition: all 0.2s; }
-    .modal-save:hover { background: var(--orange-light); }
-
-    /* MEMO MODAL */
+    .modal-save { width: 100%; padding: 14px; background: var(--orange); color: white; border: none; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 12px; }
     .memo-modal { background: white; border-radius: 20px; padding: 32px 36px; max-width: 480px; width: 90%; position: relative; }
-    .memo-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #EBEBEB; border-radius: 10px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; min-height: 120px; transition: border-color 0.2s; }
+    .memo-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #EBEBEB; border-radius: 10px; font-size: 14px; font-family: 'Pretendard', sans-serif; outline: none; resize: vertical; min-height: 120px; }
     .memo-textarea:focus { border-color: #4F46E5; }
     .memo-save { width: 100%; padding: 13px; background: #4F46E5; color: white; border: none; border-radius: 50px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Pretendard', sans-serif; margin-top: 10px; }
-
-    .empty-state { text-align: center; padding: 60px 24px; color: var(--gray-mid); font-size: 15px; }
   </style>
 </head>
 <body>
@@ -129,20 +162,25 @@
   <div class="nav-logo">LEARNING CREW 관리자</div>
   <div class="nav-right">
     <span class="nav-count" id="navCount">총 0건</span>
-    <button class="nav-export" onclick="exportCSV()">CSV 다운로드</button>
+    <button class="nav-export" id="exportBtn" onclick="exportCSV()">CSV 다운로드</button>
   </div>
 </nav>
 
-<div class="main">
-  <div class="page-title">크루장 신청 현황</div>
-  <div class="page-desc">신청일시 기준 최신순 · 행 클릭 시 상세 확인</div>
+<!-- 탭 -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('leader', this)">크루장 신청현황</button>
+  <button class="tab-btn" onclick="switchTab('member', this)">크루원 신청현황</button>
+</div>
 
+<!-- 크루장 신청현황 -->
+<div class="main" id="leaderTab">
+  <div class="page-title">크루장 신청 현황</div>
+  <div class="page-desc">신청일시 기준 최신순</div>
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterData('전체', this)">전체</button>
     <button class="filter-btn" onclick="filterData('모집중', this)">모집중</button>
     <button class="filter-btn" onclick="filterData('마감', this)">마감</button>
   </div>
-
   <div class="table-wrap">
     <table>
       <thead>
@@ -153,15 +191,29 @@
           <th>참여이력</th>
           <th>크루명 / 유형</th>
           <th>총정원</th>
+          <th>지원자</th>
           <th>메모</th>
           <th>모집상태</th>
           <th>관리</th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr><td colspan="9" class="empty-state">데이터를 불러오는 중...</td></tr>
+        <tr><td colspan="10" class="empty-state">데이터를 불러오는 중...</td></tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- 크루원 신청현황 -->
+<div class="main" id="memberTab" style="display:none;">
+  <div class="kanban-header">
+    <div>
+      <div class="page-title">크루원 신청 현황</div>
+      <div class="page-desc">크루별 지원자 현황</div>
+    </div>
+  </div>
+  <div class="kanban-grid" id="kanbanGrid">
+    <div class="empty-state" style="grid-column:1/-1;">데이터를 불러오는 중...</div>
   </div>
 </div>
 
@@ -200,8 +252,11 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
   let allData = [];
+  let memberData = [];
   let currentFilter = '전체';
+  let currentTab = 'leader';
   let currentDocId = null;
   let memoDocId = null;
 
@@ -217,6 +272,20 @@
   };
   const TEXTAREA_FIELDS = ['중간목표','최종목표','1_4주차','5_8주차','9_12주차','크루원요건','소개글'];
 
+  // 탭 전환
+  window.switchTab = function(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('leaderTab').style.display = tab === 'leader' ? 'block' : 'none';
+    document.getElementById('memberTab').style.display = tab === 'member' ? 'block' : 'none';
+    document.getElementById('exportBtn').style.display = tab === 'leader' ? 'block' : 'none';
+    if (tab === 'member') renderKanban();
+    else {
+      document.getElementById('navCount').textContent = `총 ${allData.length}건`;
+    }
+  };
+
   async function loadData() {
     try {
       const q = query(collection(db, 'applications'), orderBy('신청일시', 'desc'));
@@ -227,27 +296,39 @@
       allData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       allData.sort((a,b) => (b.신청일시||'').localeCompare(a.신청일시||''));
     }
+
+    try {
+      const snap2 = await getDocs(collection(db, 'member_applications'));
+      memberData = snap2.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch { memberData = []; }
+
     document.getElementById('navCount').textContent = `총 ${allData.length}건`;
     renderTable(allData);
+  }
+
+  function getApplicantCount(crewName) {
+    return memberData.filter(m => m.지원크루명 === crewName).length;
   }
 
   function renderTable(data) {
     const tbody = document.getElementById('tableBody');
     if (!data.length) {
-      tbody.innerHTML = '<tr><td colspan="9" class="empty-state">신청 데이터가 없습니다.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" class="empty-state">신청 데이터가 없습니다.</td></tr>';
       return;
     }
-
-    const rows = data.map((d, i) => {
+    tbody.innerHTML = data.map((d, i) => {
       const status = d.status || '대기중';
       const hasMemo = d.memo && d.memo.trim() !== '';
+      const count = getApplicantCount(d.크루명);
       return `
         <tr class="row-top">
           <td class="td-num" rowspan="2">${i + 1}</td>
           <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
           <td class="td-name">${d.이름||'-'}</td>
           <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
-          <td class="td-crew">${d.크루명||'-'}</td>          <td rowspan="2">${d.총정원||'-'}명</td>
+          <td class="td-crew">${d.크루명||'-'}</td>
+          <td rowspan="2">${d.총정원||'-'}명</td>
+          <td rowspan="2"><span class="applicant-count">👥 ${count}명</span></td>
           <td rowspan="2">
             <button class="btn-memo ${hasMemo?'has-memo':''}" onclick="openMemo('${d.id}')">
               ${hasMemo ? '📝 있음' : '메모'}
@@ -266,11 +347,53 @@
           </td>
         </tr>
         <tr class="row-bottom">
-          <td style="color:#888; font-size:12px;">${d.부서||'-'}</td>
+          <td>${d.부서||'-'}</td>
           <td><span class="type-chip">${d.유형||'-'}</span></td>
         </tr>`;
     }).join('');
-    tbody.innerHTML = rows;
+  }
+
+  function renderKanban() {
+    const grid = document.getElementById('kanbanGrid');
+    const approvedCrews = allData.filter(d => d.status === '모집중' || d.status === '마감');
+
+    document.getElementById('navCount').textContent = `크루원 총 ${memberData.length}명`;
+
+    if (!approvedCrews.length) {
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">모집중인 크루가 없습니다.</div>';
+      return;
+    }
+
+    grid.innerHTML = approvedCrews.map(crew => {
+      const applicants = memberData.filter(m => m.지원크루명 === crew.크루명);
+      const crewId = crew.id;
+      return `
+        <div class="kanban-col">
+          <div class="kanban-col-header">
+            <div class="kanban-col-title">${crew.크루명||'-'}</div>
+            <span class="kanban-col-count">${applicants.length}명 / ${crew.총정원||'-'}명</span>
+          </div>
+          <div class="kanban-col-body">
+            ${applicants.length === 0
+              ? '<div class="empty-state">지원자가 없습니다.</div>'
+              : applicants.map(a => `
+                <div class="applicant-card">
+                  <div class="applicant-card-name">
+                    <span>${a.이름||'-'}</span>
+                    <span class="history-chip ${a.참여여부==='있음'?'history-yes':'history-no'}" style="font-size:10px;">${a.참여여부==='있음'?'참여이력있음':'신규'}</span>
+                  </div>
+                  <div class="applicant-card-info">
+                    <span>🏢 ${a.부서||'-'} · ${a.사번||'-'}</span>
+                    <span>📅 ${a.신청일시||'-'}</span>
+                  </div>
+                  ${a.지원동기 ? `<div class="applicant-card-motivation">${a.지원동기}</div>` : ''}
+                </div>`).join('')}
+          </div>
+          <div class="kanban-col-footer">
+            <button class="btn-csv-crew" onclick="exportCrewCSV('${crew.크루명}')">📥 ${crew.크루명} CSV 다운로드</button>
+          </div>
+        </div>`;
+    }).join('');
   }
 
   window.filterData = function(filter, btn) {
@@ -284,7 +407,6 @@
   window.setStatus = async function(id, status) {
     const d = allData.find(x => x.id === id);
     const current = d?.status || '대기중';
-    // 같은 버튼 누르면 대기중으로 초기화
     const newStatus = current === status ? '대기중' : status;
     await updateDoc(doc(db,'applications',id), { status: newStatus });
     const idx = allData.findIndex(x => x.id === id);
@@ -362,6 +484,7 @@
     renderTable(filtered);
   };
 
+  // 전체 CSV
   window.exportCSV = function() {
     if (!allData.length) { alert('데이터가 없습니다.'); return; }
     const keys = ['신청일시','이름','사번','부서','참여여부','크루명','유형','활동기간',
@@ -372,13 +495,33 @@
       '총정원','신규모집인원','사전구성인원','크루원요건','소개글','키워드','모집상태','메모'];
     const csv = [labels.join(','), ...allData.map((d, i) =>
       [`"${i+1}"`, ...keys.map(k => {
-        const val = (d[k]||'').toString().replace(/"/g,'""');
+        let val = (d[k]||'').toString().replace(/"/g,'""');
+        if (val.startsWith('#')) val = ' ' + val;
         return `"${val}"`;
       })].join(',')
     )].join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
-    a.download = `러닝크루_신청현황_${new Date().toLocaleDateString('ko-KR')}.csv`;
+    a.download = `러닝크루_크루장신청현황_${new Date().toLocaleDateString('ko-KR')}.csv`;
+    a.click();
+  };
+
+  // 크루별 CSV
+  window.exportCrewCSV = function(crewName) {
+    const applicants = memberData.filter(m => m.지원크루명 === crewName);
+    if (!applicants.length) { alert('지원자가 없습니다.'); return; }
+    const keys = ['신청일시','지원크루명','이름','사번','부서','참여여부','지원동기'];
+    const labels = ['순번','신청일시','지원크루명','이름','사번','부서','참여이력','지원동기'];
+    const csv = [labels.join(','), ...applicants.map((d, i) =>
+      [`"${i+1}"`, ...keys.map(k => {
+        let val = (d[k]||'').toString().replace(/"/g,'""');
+        if (val.startsWith('#')) val = ' ' + val;
+        return `"${val}"`;
+      })].join(',')
+    )].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
+    a.download = `${crewName}_크루원지원현황_${new Date().toLocaleDateString('ko-KR')}.csv`;
     a.click();
   };
 
