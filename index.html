@@ -45,13 +45,13 @@
     .hero-banner { width: 100%; display: block; object-fit: cover; object-position: center; }
 
     /* INTRO */
-    .intro-section { background: #f4f3f2; padding: 0px 48px 72px; text-align: center; }
+    .intro-section { background: #f4f3f2; padding: 0px 48px 36px; text-align: center; }
     .intro-section h2 {
-      font-size: clamp(14px, 1.8vw, 19px); font-weight: 700; line-height: 1.44;
+      font-size: clamp(17px, 2.2vw, 23px); font-weight: 700; line-height: 1.44;
       color: #444; word-break: keep-all; margin-bottom: 20px;
-      letter-spacing: 0.3px;
+      letter-spacing: -0.3px;
     }
-    .intro-section p { font-size: clamp(14px, 1.6vw, 18px); color: var(--gray-mid); line-height: 1.52; word-break: keep-all; font-weight: 500; letter-spacing: 0.3px; }
+    .intro-section p { font-size: clamp(17px, 1.9vw, 22px); color: var(--gray-mid); line-height: 1.52; word-break: keep-all; font-weight: 500; letter-spacing: 0.3px; }
     .intro-section p strong { color: var(--orange); font-weight: 700; }
 
     /* REVIEW 캐러셀 */
@@ -99,7 +99,7 @@
     section { padding: 64px 24px; }
     .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 12px; }
-    .section-title { font-size: clamp(24px, 3.4vw, 38px); font-weight: 900; line-height: 1.25; margin-bottom: 16px; }
+    .section-title { font-size: clamp(20px, 2.8vw, 28px); font-weight: 900; line-height: 1.25; margin-bottom: 16px; }
     .section-desc { font-size: 16px; color: var(--gray-mid); line-height: 1.8; max-width: 540px; word-break: keep-all; }
 
     /* STUDY TYPES */
@@ -130,31 +130,21 @@
     .how-section { background: var(--bg); }
     .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
     .how-title-divider { display: none; }
-    .how-card { background: white; border-radius: var(--radius); padding: 32px 28px; text-align: left; transition: transform 0.25s; }
+    .how-card { background: white; border-radius: var(--radius); padding: 32px 28px; text-align: left; transition: transform 0.25s; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
     .how-card:hover { transform: translateY(-4px); }
-    .how-icon {
-      width: 48px; height: 48px; background: var(--orange-pale); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 0 18px;
-    }
-    .how-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; text-align: left; }
-    .how-title-divider { border: none; border-top: 2px solid var(--orange); width: 28px; margin: 0 0 18px; }
+    .how-icon { width: 48px; height: 48px; background: var(--orange-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 0 18px; }
+    .how-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; text-align: left; }
+    .how-card-body { padding: 0; }
     .how-block { display: flex; gap: 12px; align-items: flex-start; padding: 13px 0; border-top: 1px solid #f0f0f0; }
     .how-block:first-of-type { border-top: none; padding-top: 0; }
-    .how-block-icon {
-      width: 5px; height: 5px; border-radius: 50%; background: #ccc;
-      flex-shrink: 0; margin-top: 9px;
-    }
+    .how-block-icon { width: 5px; height: 5px; border-radius: 50%; background: #ccc; flex-shrink: 0; margin-top: 9px; }
     .how-block-body { flex: 1; }
-    .how-block-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 3px; line-height: 1.5; word-break: keep-all; }
-    .how-block-desc { font-size: 14.5px; color: #999; line-height: 1.7; word-break: keep-all; margin-top: 3px; }
-    .how-badge-wrap { margin: 14px 0 8px; }
-    .how-badge {
-      display: inline-block; background: var(--orange-pale); color: var(--orange);
-      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px;
-    }
+    .how-block-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 2px; line-height: 1.5; word-break: keep-all; }
+    .how-block-desc { font-size: 13px; color: #999; line-height: 1.6; word-break: keep-all; margin-top: 2px; }
+    .how-badge-wrap { margin: 10px 0 6px; }
+    .how-badge { display: inline-block; background: var(--orange-pale); color: var(--orange); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; }
     .how-badge-green { background: #eafaf3; color: #1a9e5e; }
     .how-badge-red { background: #fdecea; color: #d64242; }
-    .types-notice { margin-top: 24px; font-size: 19px; color: #999; font-weight: 500; }
 
     /* CTA */
     .cta-section { background: var(--dark); text-align: center; padding: 100px 24px; }
@@ -233,7 +223,7 @@
     <div class="types-header">
       <p class="section-label">Study Types</p>
       <h2 class="section-title">스터디 유형</h2>
-      <p class="section-desc">업무 및 직무 수행에 필요한 주제로 선정하여, 목표에 따라 희망하는 <span style="color:var(--orange); font-weight:700; text-decoration:underline; text-underline-offset:3px;">스터디 유형</span>을 <span style="color:var(--orange); font-weight:700; text-decoration:underline; text-underline-offset:3px;">선택</span>하여 진행합니다.</p>
+      <p class="section-desc">업무 및 직무 수행에 필요한 주제로 선정하여, 목표에 따라 희망하는 <span style="color:var(--orange); font-weight:700;">스터디 유형</span>을 <span style="color:var(--orange); font-weight:700;">선택</span>하여 진행합니다.</p>
     </div>
     <div class="types-grid">
 
@@ -340,7 +330,6 @@
       <div class="how-card">
         <div class="how-icon">📖</div>
         <div class="how-title">학습 방법</div>
-        <hr class="how-title-divider">
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">사내·외 전문가 초청</div></div></div>
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">온/오프라인 강의 수강</div></div></div>
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">도서·교재 활용</div></div></div>
@@ -352,7 +341,6 @@
       <div class="how-card">
         <div class="how-icon">🎁</div>
         <div class="how-title">스터디 지원</div>
-        <hr class="how-title-divider">
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">첫모임 밍글비 1회 제공</div><div class="how-block-desc">크루 운영 예산 외 별도 제공<br>1인당 1.5만 원 한도, 초기 크루원 네트워킹을 위한 식사·다과 비용 지원</div></div></div>
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">크루당 총 50만 원 학습 예산 지원</div><div class="how-block-desc">사내·외 전문가/현직자 초청비<br>학습 활동 비용 (강의, 도서비, 시험 응시료 포함)</div></div></div>
       </div>
@@ -361,7 +349,6 @@
       <div class="how-card">
         <div class="how-icon">🏆</div>
         <div class="how-title">수료 기준</div>
-        <hr class="how-title-divider">
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">스터디 기간 절반, 8회 이상 진행</div><div class="how-block-desc">진행시간 1시간 이상, 크루원 70% 이상 참석 시 1회 인정</div></div></div>
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">크루 중간/최종 목표 달성 인증</div></div></div>
         <div class="how-block" style="border-top: 1px solid #f0f0f0; padding-left: 17px;">
@@ -370,7 +357,7 @@
             <div class="how-block-title">최종 수료 시 회식비 인당 3만 원 지급</div>
           </div>
         </div>
-        <div class="how-block" style="border-top: 1px solid #f0f0f0; padding-top:13px; margin-top:4px; justify-content: flex-end;">
+        <div class="how-block" style="justify-content: flex-end;">
           <div class="how-block-body" style="text-align: right;">
             <div class="how-block-desc" style="color:#bbb; font-size:12px;">※ 미수료 시 다음 시즌 1회 참여 제한</div>
           </div>
@@ -379,12 +366,12 @@
 
     </div>
     <div style="text-align:center; margin-top: 52px;">
-      <a href="https://bit.ly/oy-learningcrew-leader" class="btn-primary" style="font-size:18px; padding:18px 56px;">크루장 지원하기 →</a>
-      <div style="margin-top:20px;">
-        <div class="cta-deadline">
-          <span style="font-size:18px;">📅</span>
-          <span>모집 마감&nbsp;<span style="color:var(--orange); font-weight:900;">0000년 00월 00일</span></span>
+      <a id="applyBtn" href="https://bit.ly/oy-learningcrew-leader" class="btn-primary" style="font-size:18px; padding:18px 56px; opacity:0.4; pointer-events:none; cursor:not-allowed;">크루장 지원하기 →</a>
+      <div style="margin-top:28px;">
+        <div style="font-size:26px; font-weight:900; color:var(--dark); margin-bottom:8px;">
+          📅 <span style="color:var(--orange);">6/9(화) ~ 6/15(월) 18:00</span> 까지
         </div>
+        <div id="countdown" style="font-size:18px; font-weight:500; color:#aaa; letter-spacing:1px;">로딩 중...</div>
       </div>
     </div>
   </div>
@@ -396,6 +383,71 @@
     <p style="font-size:20px; color:white; font-weight:600;">문의 : 인재육성팀 김지윤 [jiyoon.kim14]</p>
   </div>
 </section>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAdYQjs_BsPgo1PZ2TiF_sXgKIioHGYZjg",
+    authDomain: "learningcrew-4.firebaseapp.com",
+    projectId: "learningcrew-4",
+    storageBucket: "learningcrew-4.firebasestorage.app",
+    messagingSenderId: "673802856529",
+    appId: "1:673802856529:web:6406fae47bfd84d41af070"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const startDate = new Date('2025-06-09T00:00:00');
+  const deadline = new Date('2025-06-15T18:00:00');
+  const btn = document.getElementById('applyBtn');
+  const countEl = document.getElementById('countdown');
+
+  // Firebase에서 버튼 활성화 상태 확인
+  async function checkRecruitment() {
+    try {
+      const snap = await getDoc(doc(db, 'settings', 'recruitment'));
+      const active = snap.exists() && snap.data().active === true;
+      if (active) {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+        btn.style.cursor = 'pointer';
+      }
+    } catch(e) {}
+  }
+  checkRecruitment();
+
+  function updateCountdown() {
+    const now = new Date();
+    if (now < startDate) {
+      countEl.textContent = '모집 시작 전입니다.';
+      countEl.style.color = '#aaa';
+      countEl.style.fontSize = '20px';
+      return;
+    }
+    const diff = deadline - now;
+    if (diff <= 0) {
+      countEl.textContent = '모집이 마감되었습니다.';
+      countEl.style.color = '#aaa';
+      countEl.style.fontSize = '20px';
+      btn.style.opacity = '0.4';
+      btn.style.pointerEvents = 'none';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    countEl.textContent = `D-${days}일 ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    countEl.style.color = '#aaa';
+    countEl.style.fontSize = '18px';
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
