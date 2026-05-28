@@ -51,7 +51,7 @@
       color: #444; word-break: keep-all; margin-bottom: 20px;
       letter-spacing: -0.3px;
     }
-    .intro-section p { font-size: clamp(17px, 1.9vw, 22px); color: var(--gray-mid); line-height: 1.52; word-break: keep-all; font-weight: 500; letter-spacing: 0.3px; }
+    .intro-section p { font-size: clamp(18px, 2.1vw, 23px); color: var(--gray-mid); line-height: 1.52; word-break: keep-all; font-weight: 500; letter-spacing: 0.3px; }
     .intro-section p strong { color: var(--orange); font-weight: 700; }
 
     /* REVIEW 캐러셀 */
@@ -110,17 +110,19 @@
     .types-header { margin-bottom: 40px; }
     .types-section .section-label { color: var(--orange); }
     .types-section .section-title { color: var(--dark); }
-    .types-section .section-desc { color: #555; max-width: 700px; }
+    .types-section .section-desc { color: #555; max-width: 900px; font-size: 18px; }
     .types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1000px; margin: 0 auto; }
     .type-card {
-      background: white; border-radius: 16px; padding: 32px 28px;
+      background: white; border-radius: 16px; padding: 28px 28px;
       transition: all 0.25s; border: none;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
     }
     .type-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
-    .type-icon { width: 56px; height: 56px; margin-bottom: 18px; }
+    .type-card-text { flex: 1; }
+    .type-icon { width: 64px; height: 64px; flex-shrink: 0; object-fit: contain; }
     .type-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--orange); }
-    .type-desc { font-size: 14px; color: #666; line-height: 1.7; }
+    .type-desc { font-size: 17px; color: #666; line-height: 1.6; }
     .types-notice { margin-top: 20px; font-size: 14px; color: #999; max-width: 1000px; margin-left: auto; margin-right: auto; }
     .type-name span { color: var(--orange); }
     .type-desc { font-size: 14px; color: var(--gray-mid); line-height: 1.8; }
@@ -139,8 +141,8 @@
     .how-block:first-of-type { border-top: none; padding-top: 0; }
     .how-block-icon { width: 5px; height: 5px; border-radius: 50%; background: #ccc; flex-shrink: 0; margin-top: 9px; }
     .how-block-body { flex: 1; }
-    .how-block-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 2px; line-height: 1.5; word-break: keep-all; }
-    .how-block-desc { font-size: 13px; color: #999; line-height: 1.6; word-break: keep-all; margin-top: 2px; }
+    .how-block-title { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 2px; line-height: 1.5; word-break: keep-all; }
+    .how-block-desc { font-size: 15px; color: #999; line-height: 1.6; word-break: keep-all; margin-top: 2px; }
     .how-badge-wrap { margin: 10px 0 6px; }
     .how-badge { display: inline-block; background: var(--orange-pale); color: var(--orange); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; }
     .how-badge-green { background: #eafaf3; color: #1a9e5e; }
@@ -229,30 +231,38 @@
 
       <!-- 자격취득형 -->
       <div class="type-card">
+        <div class="type-card-text">
+          <div class="type-name">자격취득형</div>
+          <div class="type-desc">실무 관련 자격증 취득을 위한 학습</div>
+        </div>
         <img src="ICON1.png" class="type-icon" alt="자격취득형" />
-        <div class="type-name">자격취득형</div>
-        <div class="type-desc">실무 관련 자격증 취득을 위한 학습</div>
       </div>
 
       <!-- 업스킬링형 -->
       <div class="type-card">
+        <div class="type-card-text">
+          <div class="type-name">업스킬링형</div>
+          <div class="type-desc">실무 스킬 향상을 위한 툴/지식 학습</div>
+        </div>
         <img src="ICON2.png" class="type-icon" alt="업스킬링형" />
-        <div class="type-name">업스킬링형</div>
-        <div class="type-desc">실무 스킬 향상을 위한 툴/지식 학습</div>
       </div>
 
       <!-- 지식습득형 -->
       <div class="type-card">
+        <div class="type-card-text">
+          <div class="type-name">지식습득형</div>
+          <div class="type-desc">업무 트렌드/인사이트를 함께 학습</div>
+        </div>
         <img src="ICON3.png" class="type-icon" alt="지식습득형" />
-        <div class="type-name">지식습득형</div>
-        <div class="type-desc">업무 트렌드/인사이트를 함께 학습</div>
       </div>
 
       <!-- 사이드 프로젝트형 -->
       <div class="type-card">
+        <div class="type-card-text">
+          <div class="type-name">사이드 프로젝트형</div>
+          <div class="type-desc">실무 프로젝트를 함께 기획/개발</div>
+        </div>
         <img src="ICON4.png" class="type-icon" alt="사이드 프로젝트형" />
-        <div class="type-name">사이드 프로젝트형</div>
-        <div class="type-desc">실무 프로젝트를 함께 기획/개발</div>
       </div>
 
     </div>
@@ -341,7 +351,7 @@
       <div class="how-card">
         <div class="how-icon">🎁</div>
         <div class="how-title">스터디 지원</div>
-        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">첫모임 밍글비 1회 제공</div><div class="how-block-desc">크루 운영 예산 외 별도 제공<br>1인당 1.5만 원 한도, 초기 크루원 네트워킹을 위한 식사·다과 비용 지원</div></div></div>
+        <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">첫모임 밍글비 1회 제공</div><div class="how-block-desc">크루 운영 예산 외 별도 제공<br>1인당 2만 원 한도, 초기 크루원 네트워킹을 위한 식사·다과 비용 지원</div></div></div>
         <div class="how-block"><div class="how-block-icon"></div><div class="how-block-body"><div class="how-block-title">크루당 총 50만 원 학습 예산 지원</div><div class="how-block-desc">사내·외 전문가/현직자 초청비<br>학습 활동 비용 (강의, 도서비, 시험 응시료 포함)</div></div></div>
       </div>
 
