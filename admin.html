@@ -201,7 +201,9 @@
         <tr>
           <th style="text-align:center;">순번</th>
           <th>신청일시</th>
-          <th>이름 / 팀</th>
+          <th>이름</th>
+          <th>팀</th>
+          <th>직급</th>
           <th>참여이력</th>
           <th>크루명 / 유형</th>
           <th>총정원</th>
@@ -209,10 +211,11 @@
           <th>메모</th>
           <th>모집상태</th>
           <th>관리</th>
+          <th>삭제</th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr><td colspan="10" class="empty-state">데이터를 불러오는 중...</td></tr>
+        <tr><td colspan="13" class="empty-state">데이터를 불러오는 중...</td></tr>
       </tbody>
     </table>
   </div>
@@ -329,7 +332,7 @@
   function renderTable(data) {
     const tbody = document.getElementById('tableBody');
     if (!data.length) {
-      tbody.innerHTML = '<tr><td colspan="10" class="empty-state">신청 데이터가 없습니다.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="13" class="empty-state">신청 데이터가 없습니다.</td></tr>';
       return;
     }
     tbody.innerHTML = data.map((d, i) => {
@@ -340,7 +343,9 @@
         <tr class="row-top">
           <td class="td-num" rowspan="2">${i + 1}</td>
           <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
-          <td class="td-name">${d.이름||'-'} <span style="font-size:11px; color:#aaa; font-weight:400;">${d.직급||''}</span></td>
+          <td class="td-name" rowspan="2">${d.이름||'-'}</td>
+          <td rowspan="2" style="font-size:12px;">${d.부서||'-'}</td>
+          <td rowspan="2" style="font-size:12px; color:var(--gray-mid);">${d.직급||'-'}</td>
           <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
           <td class="td-crew">${d.크루명||'-'}</td>
           <td rowspan="2">${d.총정원||'-'}명</td>
@@ -357,14 +362,13 @@
             </div>
           </td>
           <td rowspan="2">
-            <div class="manage-btns">
-              <button class="btn-edit" onclick="openModal('${d.id}')">상세/수정</button>
-              <button class="btn-delete" onclick="deleteEntry('${d.id}','${(d.이름||'').replace(/'/g,'\\\'') }')">✕ 삭제</button>
-            </div>
+            <button class="btn-edit" onclick="openModal('${d.id}')">상세/수정</button>
+          </td>
+          <td rowspan="2">
+            <button class="btn-delete" onclick="deleteEntry('${d.id}','${(d.이름||'').replace(/'/g,'\\\'')}')">삭제하기</button>
           </td>
         </tr>
         <tr class="row-bottom">
-          <td>${d.부서||'-'}</td>
           <td><span class="type-chip">${d.유형||'-'}</span></td>
         </tr>`;
     }).join('');
@@ -405,6 +409,12 @@
       return;
     }
 
+    // 중복 사번 찾기
+    const sabnoCounts = {};
+    memberData.forEach(a => {
+      if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1;
+    });
+
     grid.innerHTML = approvedCrews.map(crew => {
       const applicants = memberData.filter(m => m.지원크루명 === crew.크루명);
       return `
@@ -416,10 +426,12 @@
           <div class="kanban-col-body">
             ${applicants.length === 0
               ? '<div class="empty-state">지원자가 없습니다.</div>'
-              : applicants.map(a => `
-                <div class="applicant-card">
+              : applicants.map(a => {
+                const isDup = sabnoCounts[a.사번] > 1;
+                return `
+                <div class="applicant-card" style="${isDup ? 'border-color:#ffcccc; background:#fff5f5;' : ''}">
                   <div class="applicant-card-name">
-                    <span>${a.이름||'-'}</span>
+                    <span>${a.이름||'-'} ${isDup ? '<span style="color:#e53935; font-size:10px; font-weight:700;">● 중복지원</span>' : ''}</span>
                     <span class="history-chip ${a.참여여부==='있음'?'history-yes':'history-no'}" style="font-size:10px;">${a.참여여부==='있음'?'참여이력있음':'신규'}</span>
                   </div>
                   <div class="applicant-card-info">
@@ -427,7 +439,11 @@
                     <span>📅 ${a.신청일시||'-'}</span>
                   </div>
                   ${a.지원동기 ? `<div class="applicant-card-motivation">${a.지원동기}</div>` : ''}
-                </div>`).join('')}
+                  <div style="margin-top:8px; text-align:right;">
+                    <button class="btn-delete" style="font-size:11px; padding:3px 8px;" onclick="deleteMember('${a.id}','${(a.이름||'').replace(/'/g,'\\\'') }')">삭제하기</button>
+                  </div>
+                </div>`;
+              }).join('')}
           </div>
           <div class="kanban-col-footer">
             <button class="btn-csv-crew" onclick="exportCrewCSV('${crew.크루명}')">📥 ${crew.크루명} CSV 다운로드</button>
@@ -455,6 +471,17 @@
       });
     });
   }
+
+  window.deleteMember = async function(id, name) {
+    if (!confirm(`"${name}"을 정말 삭제하시겠습니까?`)) return;
+    const pw = prompt('삭제 비밀번호를 입력해 주세요.');
+    if (pw !== '7629') { alert('비밀번호가 올바르지 않습니다.'); return; }
+    await deleteDoc(doc(db, 'member_applications', id));
+    memberData = memberData.filter(x => x.id !== id);
+    document.getElementById('navCount').textContent = `크루원 총 ${memberData.length}명`;
+    renderKanban();
+    alert('삭제되었습니다.');
+  };
 
   window.filterData = function(filter, btn) {
     currentFilter = filter;
