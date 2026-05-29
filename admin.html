@@ -546,9 +546,6 @@
                     <span>📅 ${a.신청일시||'-'}</span>
                   </div>
                   ${a.지원동기 ? `<div class="applicant-card-motivation">${a.지원동기}</div>` : ''}
-                  <div style="margin-top:8px; text-align:right;">
-                    <button class="btn-delete" style="font-size:11px; padding:3px 8px;" onclick="deleteMember('${a.id}','${(a.이름||'').replace(/'/g,'\\\'') }')">삭제하기</button>
-                  </div>
                 </div>`;
               }).join('')}
           </div>
@@ -611,13 +608,25 @@
   window.closeMemberDetail = function() {
     document.getElementById('memberDetailBg').classList.remove('open');
   };
+
+  window.deleteMember = async function(id, name) {
     if (!confirm(`"${name}"을 정말 삭제하시겠습니까?`)) return;
     const pw = prompt('삭제 비밀번호를 입력해 주세요.');
     if (pw !== '7629') { alert('비밀번호가 올바르지 않습니다.'); return; }
     await deleteDoc(doc(db, 'member_applications', id));
     memberData = memberData.filter(x => x.id !== id);
-    document.getElementById('navCount').textContent = `크루원 총 ${memberData.length}명`;
-    renderKanban();
+
+    // 목록 갱신
+    const sabnoCounts = {};
+    memberData.forEach(a => { if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1; });
+    const filtered = memberCurrentFilter === '중복'
+      ? memberData.filter(a => sabnoCounts[a.사번] > 1)
+      : memberData;
+    renderMemberList(filtered);
+
+    // 칸반 탭이면 바로 갱신
+    if (currentTab === 'member') renderKanban();
+
     alert('삭제되었습니다.');
   };
 
