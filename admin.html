@@ -26,13 +26,22 @@
     .nav-logo { color: var(--orange); font-size: 18px; font-weight: 900; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .nav-count { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .nav-toggle {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.08); border-radius: 50px;
+      padding: 8px 18px; cursor: pointer; border: 1.5px solid rgba(255,255,255,0.15);
+      font-family: 'Pretendard', sans-serif; font-size: 13px; font-weight: 700; color: white;
+      transition: all 0.2s;
+    }
+    .nav-toggle.on { background: var(--orange); border-color: var(--orange); }
+    .toggle-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); transition: all 0.2s; }
+    .nav-toggle.on .toggle-dot { background: white; }
+
     .nav-export {
       background: var(--orange); color: white; border: none; border-radius: 50px;
       padding: 8px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
       font-family: 'Pretendard', sans-serif;
     }
-
-    /* 탭 */
     .tab-bar {
       background: var(--dark); padding: 0 40px;
       display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.08);
@@ -89,7 +98,8 @@
     .btn-close { padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ddd; font-size: 11px; font-weight: 700; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .btn-close.active-close { background: #555; color: white; border-color: #555; }
     .manage-btns { display: flex; flex-direction: column; gap: 4px; }
-    .btn-edit { padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; }
+    .btn-delete { padding: 4px 10px; border-radius: 6px; border: 1px solid #ffcccc; font-size: 11px; font-weight: 600; cursor: pointer; background: #fff5f5; color: #e53935; font-family: 'Pretendard', sans-serif; transition: all 0.2s; }
+    .btn-delete:hover { background: #e53935; color: white; border-color: #e53935; }
     .btn-edit:hover { border-color: var(--orange); color: var(--orange); }
     .btn-memo { padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 11px; font-weight: 600; cursor: pointer; background: white; font-family: 'Pretendard', sans-serif; }
     .btn-memo.has-memo { border-color: #4F46E5; background: #EEF2FF; color: #4F46E5; }
@@ -100,10 +110,9 @@
       margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
     }
     .kanban-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .kanban-col {
-      background: white; border-radius: var(--radius);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;
-    }
+    .kanban-col { cursor: grab; }
+    .kanban-col.dragging { opacity: 0.5; cursor: grabbing; }
+    .kanban-col.drag-over { border: 2px dashed var(--orange); }
     .kanban-col-header {
       padding: 16px 20px; background: var(--dark);
       display: flex; align-items: center; justify-content: space-between;
@@ -161,6 +170,10 @@
 <nav>
   <div class="nav-logo">LEARNING CREW 관리자</div>
   <div class="nav-right">
+    <button class="nav-toggle" id="recruitToggle" onclick="toggleRecruitment()">
+      <span class="toggle-dot"></span>
+      <span id="toggleLabel">크루장 모집 : OFF</span>
+    </button>
     <span class="nav-count" id="navCount">총 0건</span>
     <button class="nav-export" id="exportBtn" onclick="exportCSV()">CSV 다운로드</button>
   </div>
@@ -180,6 +193,7 @@
     <button class="filter-btn active" onclick="filterData('전체', this)">전체</button>
     <button class="filter-btn" onclick="filterData('모집중', this)">모집중</button>
     <button class="filter-btn" onclick="filterData('마감', this)">마감</button>
+    <button class="filter-btn" id="sortBtn" onclick="sortByDate()" style="margin-left:auto;">신청일시 ↓</button>
   </div>
   <div class="table-wrap">
     <table>
@@ -239,7 +253,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAdYQjs_BsPgo1PZ2TiF_sXgKIioHGYZjg",
@@ -310,6 +324,8 @@
     return memberData.filter(m => m.지원크루명 === crewName).length;
   }
 
+  let sortAsc = false;
+
   function renderTable(data) {
     const tbody = document.getElementById('tableBody');
     if (!data.length) {
@@ -324,7 +340,7 @@
         <tr class="row-top">
           <td class="td-num" rowspan="2">${i + 1}</td>
           <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
-          <td class="td-name">${d.이름||'-'}</td>
+          <td class="td-name">${d.이름||'-'} <span style="font-size:11px; color:#aaa; font-weight:400;">${d.직급||''}</span></td>
           <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
           <td class="td-crew">${d.크루명||'-'}</td>
           <td rowspan="2">${d.총정원||'-'}명</td>
@@ -343,6 +359,7 @@
           <td rowspan="2">
             <div class="manage-btns">
               <button class="btn-edit" onclick="openModal('${d.id}')">상세/수정</button>
+              <button class="btn-delete" onclick="deleteEntry('${d.id}','${(d.이름||'').replace(/'/g,'\\\'') }')">✕ 삭제</button>
             </div>
           </td>
         </tr>
@@ -352,6 +369,30 @@
         </tr>`;
     }).join('');
   }
+
+  window.sortByDate = function() {
+    sortAsc = !sortAsc;
+    allData.sort((a,b) => sortAsc
+      ? (a.신청일시||'').localeCompare(b.신청일시||'')
+      : (b.신청일시||'').localeCompare(a.신청일시||'')
+    );
+    const btn = document.getElementById('sortBtn');
+    btn.textContent = sortAsc ? '신청일시 ↑' : '신청일시 ↓';
+    const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
+    renderTable(filtered);
+  };
+
+  window.deleteEntry = async function(id, name) {
+    if (!confirm(`"${name}"을 정말 삭제하시겠습니까?`)) return;
+    const pw = prompt('삭제 비밀번호를 입력해 주세요.');
+    if (pw !== '7629') { alert('비밀번호가 올바르지 않습니다.'); return; }
+    await deleteDoc(doc(db, 'applications', id));
+    allData = allData.filter(x => x.id !== id);
+    document.getElementById('navCount').textContent = `총 ${allData.length}건`;
+    const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
+    renderTable(filtered);
+    alert('삭제되었습니다.');
+  };
 
   function renderKanban() {
     const grid = document.getElementById('kanbanGrid');
@@ -366,9 +407,8 @@
 
     grid.innerHTML = approvedCrews.map(crew => {
       const applicants = memberData.filter(m => m.지원크루명 === crew.크루명);
-      const crewId = crew.id;
       return `
-        <div class="kanban-col">
+        <div class="kanban-col" draggable="true" data-id="${crew.id}">
           <div class="kanban-col-header">
             <div class="kanban-col-title">${crew.크루명||'-'}</div>
             <span class="kanban-col-count">${applicants.length}명 / ${crew.총정원||'-'}명</span>
@@ -383,7 +423,7 @@
                     <span class="history-chip ${a.참여여부==='있음'?'history-yes':'history-no'}" style="font-size:10px;">${a.참여여부==='있음'?'참여이력있음':'신규'}</span>
                   </div>
                   <div class="applicant-card-info">
-                    <span>🏢 ${a.부서||'-'} · ${a.사번||'-'}</span>
+                    <span>🏢 ${a.부서||'-'} · ${a.직급||''} · ${a.사번||'-'}</span>
                     <span>📅 ${a.신청일시||'-'}</span>
                   </div>
                   ${a.지원동기 ? `<div class="applicant-card-motivation">${a.지원동기}</div>` : ''}
@@ -394,6 +434,26 @@
           </div>
         </div>`;
     }).join('');
+
+    // 드래그 순서 조정
+    let dragEl = null;
+    grid.querySelectorAll('.kanban-col').forEach(col => {
+      col.addEventListener('dragstart', () => { dragEl = col; col.classList.add('dragging'); });
+      col.addEventListener('dragend', () => { dragEl = null; col.classList.remove('dragging'); grid.querySelectorAll('.kanban-col').forEach(c => c.classList.remove('drag-over')); });
+      col.addEventListener('dragover', e => { e.preventDefault(); if (col !== dragEl) col.classList.add('drag-over'); });
+      col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+      col.addEventListener('drop', e => {
+        e.preventDefault();
+        col.classList.remove('drag-over');
+        if (dragEl && col !== dragEl) {
+          const cols = [...grid.querySelectorAll('.kanban-col')];
+          const fromIdx = cols.indexOf(dragEl);
+          const toIdx = cols.indexOf(col);
+          if (fromIdx < toIdx) col.after(dragEl);
+          else col.before(dragEl);
+        }
+      });
+    });
   }
 
   window.filterData = function(filter, btn) {
@@ -525,7 +585,42 @@
     a.click();
   };
 
+  // 모집 토글 초기 상태 로드
+  async function loadToggleState() {
+    try {
+      const snap = await getDoc(doc(db, 'settings', 'recruitment'));
+      const active = snap.exists() && snap.data().active === true;
+      updateToggleUI(active);
+    } catch(e) {}
+  }
+
+  function updateToggleUI(active) {
+    const btn = document.getElementById('recruitToggle');
+    const label = document.getElementById('toggleLabel');
+    if (active) {
+      btn.classList.add('on');
+      label.textContent = '크루장 모집 : ON';
+    } else {
+      btn.classList.remove('on');
+      label.textContent = '크루장 모집 : OFF';
+    }
+  }
+
+  window.toggleRecruitment = async function() {
+    try {
+      const snap = await getDoc(doc(db, 'settings', 'recruitment'));
+      const current = snap.exists() && snap.data().active === true;
+      const newState = !current;
+      await setDoc(doc(db, 'settings', 'recruitment'), { active: newState });
+      updateToggleUI(newState);
+      alert(newState ? '✅ 크루장 모집이 활성화되었습니다!' : '⛔ 크루장 모집이 비활성화되었습니다.');
+    } catch(e) {
+      alert('오류: ' + e.message);
+    }
+  };
+
   loadData();
+  loadToggleState();
 </script>
 </body>
 </html>
