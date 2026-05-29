@@ -759,6 +759,8 @@
     a.download = `러닝크루_크루원신청현황_${new Date().toLocaleDateString('ko-KR')}.csv`;
     a.click();
   };
+
+  window.exportCrewCSV = function(crewName) {
     const applicants = memberData.filter(m => m.지원크루명 === crewName);
     if (!applicants.length) { alert('지원자가 없습니다.'); return; }
     const keys = ['신청일시','지원크루명','이름','사번','부서','참여여부','지원동기'];
