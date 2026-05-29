@@ -242,7 +242,8 @@
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterMemberList('전체', this)">전체</button>
     <button class="filter-btn" onclick="filterMemberList('중복', this)">🔴 중복지원</button>
-    <button class="filter-btn" id="memberSortBtn" onclick="sortMemberList()" style="margin-left:auto;">신청일시 ↓</button>
+    <button class="filter-btn" id="memberSortBtn" onclick="sortMemberList()">신청일시 ↓</button>
+    <button class="nav-export" style="margin-left:auto;" onclick="exportMemberCSV()">CSV 다운로드</button>
   </div>
   <div class="table-wrap">
     <table>
@@ -256,7 +257,7 @@
           <th>사번</th>
           <th>참여이력</th>
           <th>지원 크루명</th>
-          <th>지원동기</th>
+          <th>지원동기 <span style="font-size:10px; font-weight:400; opacity:0.7;">(클릭)</span></th>
           <th>중복</th>
           <th>삭제</th>
         </tr>
@@ -265,6 +266,15 @@
         <tr><td colspan="11" class="empty-state">데이터를 불러오는 중...</td></tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- 크루원 상세 팝업 -->
+<div class="modal-bg" id="memberDetailBg">
+  <div class="modal" style="max-width:560px;">
+    <button class="modal-close" onclick="closeMemberDetail()">✕</button>
+    <div class="modal-title" id="memberDetailName"></div>
+    <div id="memberDetailFields"></div>
   </div>
 </div>
 
@@ -365,7 +375,7 @@
           <td style="font-size:13px;">${a.사번||'-'}</td>
           <td><span class="history-chip ${a.참여여부==='있음'?'history-yes':'history-no'}">${a.참여여부==='있음'?'있음':'없음'}</span></td>
           <td style="font-size:13px; font-weight:600;">${a.지원크루명||'-'}</td>
-          <td style="font-size:12px; color:#555; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${a.지원동기||'-'}</td>
+          <td style="font-size:12px; color:#555; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer;" onclick="openMemberDetail('${a.id}')">${a.지원동기||'-'}</td>
           <td style="text-align:center;">${isDup ? '<span style="color:#e53935; font-weight:700; font-size:13px;">● 중복</span>' : '-'}</td>
           <td><button class="btn-delete" style="font-size:11px; padding:3px 8px;" onclick="deleteMember('${a.id}','${(a.이름||'').replace(/'/g,'\\\'') }')">삭제하기</button></td>
         </tr>`;
@@ -569,7 +579,38 @@
     });
   }
 
-  window.deleteMember = async function(id, name) {
+  window.openMemberDetail = function(id) {
+    const a = memberData.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('memberDetailName').textContent = `${a.이름||'-'} · ${a.부서||'-'} · ${a.직급||'-'}`;
+    document.getElementById('memberDetailFields').innerHTML = `
+      <div class="modal-field">
+        <label class="modal-label">사번</label>
+        <div style="font-size:14px; padding:8px 0;">${a.사번||'-'}</div>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">러닝크루 참여이력</label>
+        <div style="font-size:14px; padding:8px 0;">${a.참여여부||'-'}</div>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">지원 크루명</label>
+        <div style="font-size:14px; padding:8px 0; font-weight:700; color:var(--orange);">${a.지원크루명||'-'}</div>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">지원 동기</label>
+        <div style="font-size:14px; line-height:1.8; padding:12px 14px; background:#fafafa; border-radius:8px; white-space:pre-wrap; word-break:keep-all;">${a.지원동기||'-'}</div>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">신청일시</label>
+        <div style="font-size:13px; color:#aaa; padding:8px 0;">${a.신청일시||'-'}</div>
+      </div>
+    `;
+    document.getElementById('memberDetailBg').classList.add('open');
+  };
+
+  window.closeMemberDetail = function() {
+    document.getElementById('memberDetailBg').classList.remove('open');
+  };
     if (!confirm(`"${name}"을 정말 삭제하시겠습니까?`)) return;
     const pw = prompt('삭제 비밀번호를 입력해 주세요.');
     if (pw !== '7629') { alert('비밀번호가 올바르지 않습니다.'); return; }
@@ -691,7 +732,24 @@
   };
 
   // 크루별 CSV
-  window.exportCrewCSV = function(crewName) {
+  window.exportMemberCSV = function() {
+    if (!memberData.length) { alert('데이터가 없습니다.'); return; }
+    const sabnoCounts = {};
+    memberData.forEach(a => { if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1; });
+    const keys = ['신청일시','이름','부서','직급','사번','참여여부','지원크루명','지원동기'];
+    const labels = ['순번','신청일시','이름','부서','직급','사번','참여이력','지원크루명','지원동기','중복여부'];
+    const csv = [labels.join(','), ...memberData.map((d, i) =>
+      [`"${i+1}"`, ...keys.map(k => {
+        let val = (d[k]||'').toString().replace(/"/g,'""');
+        if (val.startsWith('#')) val = ' ' + val;
+        return `"${val}"`;
+      }), `"${sabnoCounts[d.사번] > 1 ? '중복' : ''}"`].join(',')
+    )].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'}));
+    a.download = `러닝크루_크루원신청현황_${new Date().toLocaleDateString('ko-KR')}.csv`;
+    a.click();
+  };
     const applicants = memberData.filter(m => m.지원크루명 === crewName);
     if (!applicants.length) { alert('지원자가 없습니다.'); return; }
     const keys = ['신청일시','지원크루명','이름','사번','부서','참여여부','지원동기'];
