@@ -254,7 +254,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, where, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAdYQjs_BsPgo1PZ2TiF_sXgKIioHGYZjg",
@@ -287,6 +287,22 @@
       const snap = await getDocs(collection(db, 'applications'));
       allCrews = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(d => d.status === '모집중');
     }
+
+    // 관리자 저장 순서 적용
+    try {
+      const orderSnap = await getDoc(doc(db, 'settings', 'crewOrder'));
+      if (orderSnap.exists()) {
+        const order = orderSnap.data().order;
+        allCrews.sort((a, b) => {
+          const ai = order.indexOf(a.id);
+          const bi = order.indexOf(b.id);
+          if (ai === -1) return 1;
+          if (bi === -1) return -1;
+          return ai - bi;
+        });
+      }
+    } catch {}
+
     renderCrews(allCrews);
   }
 

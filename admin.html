@@ -194,7 +194,8 @@
     <button class="filter-btn active" onclick="filterData('전체', this)">전체</button>
     <button class="filter-btn" onclick="filterData('모집중', this)">모집중</button>
     <button class="filter-btn" onclick="filterData('마감', this)">마감</button>
-    <button class="filter-btn" id="sortBtn" onclick="sortByDate()" style="margin-left:auto;">신청일시 ↓</button>
+    <button class="filter-btn" id="sortBtn" onclick="sortByDate()">신청일시 ↓</button>
+    <button class="nav-export" style="margin-left:auto; background:#4F46E5;" onclick="saveCrewOrder()">📋 크루원 페이지 순서 반영</button>
   </div>
   <div class="table-wrap">
     <table>
@@ -506,6 +507,12 @@
       });
     });
   }
+
+  window.saveCrewOrder = async function() {
+    const order = allData.map(d => d.id);
+    await setDoc(doc(db, 'settings', 'crewOrder'), { order });
+    alert('✅ 크루원 페이지 순서가 반영되었습니다!');
+  };
 
   window.sortByDate = function() {
     sortAsc = !sortAsc;
