@@ -182,7 +182,8 @@
 <!-- 탭 -->
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('leader', this)">크루장 신청현황</button>
-  <button class="tab-btn" onclick="switchTab('member', this)">크루원 신청현황</button>
+  <button class="tab-btn" onclick="switchTab('member', this)">크루원 신청현황 (칸반)</button>
+  <button class="tab-btn" onclick="switchTab('memberList', this)">크루원 신청현황 (목록)</button>
 </div>
 
 <!-- 크루장 신청현황 -->
@@ -221,7 +222,7 @@
   </div>
 </div>
 
-<!-- 크루원 신청현황 -->
+<!-- 크루원 신청현황 (칸반) -->
 <div class="main" id="memberTab" style="display:none;">
   <div class="kanban-header">
     <div>
@@ -231,6 +232,39 @@
   </div>
   <div class="kanban-grid" id="kanbanGrid">
     <div class="empty-state" style="grid-column:1/-1;">데이터를 불러오는 중...</div>
+  </div>
+</div>
+
+<!-- 크루원 신청현황 (목록) -->
+<div class="main" id="memberListTab" style="display:none;">
+  <div class="page-title">크루원 신청 현황 (목록)</div>
+  <div class="page-desc">신청일시 기준 최신순</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterMemberList('전체', this)">전체</button>
+    <button class="filter-btn" onclick="filterMemberList('중복', this)">🔴 중복지원</button>
+    <button class="filter-btn" id="memberSortBtn" onclick="sortMemberList()" style="margin-left:auto;">신청일시 ↓</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:center;">순번</th>
+          <th>신청일시</th>
+          <th>이름</th>
+          <th>부서</th>
+          <th>직급</th>
+          <th>사번</th>
+          <th>참여이력</th>
+          <th>지원 크루명</th>
+          <th>지원동기</th>
+          <th>중복</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody id="memberListBody">
+        <tr><td colspan="11" class="empty-state">데이터를 불러오는 중...</td></tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -296,11 +330,74 @@
     btn.classList.add('active');
     document.getElementById('leaderTab').style.display = tab === 'leader' ? 'block' : 'none';
     document.getElementById('memberTab').style.display = tab === 'member' ? 'block' : 'none';
+    document.getElementById('memberListTab').style.display = tab === 'memberList' ? 'block' : 'none';
     document.getElementById('exportBtn').style.display = tab === 'leader' ? 'block' : 'none';
     if (tab === 'member') renderKanban();
-    else {
-      document.getElementById('navCount').textContent = `총 ${allData.length}건`;
+    else if (tab === 'memberList') renderMemberList(memberData);
+    else document.getElementById('navCount').textContent = `총 ${allData.length}건`;
+  };
+
+  let memberSortAsc = false;
+  let memberCurrentFilter = '전체';
+
+  function renderMemberList(data) {
+    const tbody = document.getElementById('memberListBody');
+    document.getElementById('navCount').textContent = `크루원 총 ${data.length}명`;
+
+    // 중복 사번 찾기
+    const sabnoCounts = {};
+    memberData.forEach(a => { if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1; });
+
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="11" class="empty-state">신청 데이터가 없습니다.</td></tr>';
+      return;
     }
+
+    tbody.innerHTML = data.map((a, i) => {
+      const isDup = sabnoCounts[a.사번] > 1;
+      return `
+        <tr style="${isDup ? 'background:#fff5f5;' : ''}">
+          <td style="text-align:center; font-weight:900; color:var(--orange);">${i + 1}</td>
+          <td style="font-size:12px; color:#888; white-space:nowrap;">${a.신청일시||'-'}</td>
+          <td style="font-weight:700;">${a.이름||'-'}</td>
+          <td style="font-size:13px;">${a.부서||'-'}</td>
+          <td style="font-size:12px; color:#888;">${a.직급||'-'}</td>
+          <td style="font-size:13px;">${a.사번||'-'}</td>
+          <td><span class="history-chip ${a.참여여부==='있음'?'history-yes':'history-no'}">${a.참여여부==='있음'?'있음':'없음'}</span></td>
+          <td style="font-size:13px; font-weight:600;">${a.지원크루명||'-'}</td>
+          <td style="font-size:12px; color:#555; max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${a.지원동기||'-'}</td>
+          <td style="text-align:center;">${isDup ? '<span style="color:#e53935; font-weight:700; font-size:13px;">● 중복</span>' : '-'}</td>
+          <td><button class="btn-delete" style="font-size:11px; padding:3px 8px;" onclick="deleteMember('${a.id}','${(a.이름||'').replace(/'/g,'\\\'') }')">삭제하기</button></td>
+        </tr>`;
+    }).join('');
+  }
+
+  window.filterMemberList = function(filter, btn) {
+    memberCurrentFilter = filter;
+    document.querySelectorAll('#memberListTab .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sabnoCounts = {};
+    memberData.forEach(a => { if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1; });
+    const filtered = filter === '중복'
+      ? memberData.filter(a => sabnoCounts[a.사번] > 1)
+      : memberData;
+    renderMemberList(filtered);
+  };
+
+  window.sortMemberList = function() {
+    memberSortAsc = !memberSortAsc;
+    memberData.sort((a, b) => memberSortAsc
+      ? (a.신청일시||'').localeCompare(b.신청일시||'')
+      : (b.신청일시||'').localeCompare(a.신청일시||'')
+    );
+    const btn = document.getElementById('memberSortBtn');
+    btn.textContent = memberSortAsc ? '신청일시 ↑' : '신청일시 ↓';
+    const sabnoCounts = {};
+    memberData.forEach(a => { if (a.사번) sabnoCounts[a.사번] = (sabnoCounts[a.사번] || 0) + 1; });
+    const filtered = memberCurrentFilter === '중복'
+      ? memberData.filter(a => sabnoCounts[a.사번] > 1)
+      : memberData;
+    renderMemberList(filtered);
   };
 
   async function loadData() {
