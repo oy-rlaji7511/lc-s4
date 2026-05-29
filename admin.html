@@ -200,17 +200,17 @@
     <table>
       <thead>
         <tr>
-          <th style="text-align:center;">순번</th>
+          <th style="text-align:center; cursor:grab;">⠿ 순번</th>
           <th>신청일시</th>
           <th>이름</th>
           <th>팀</th>
           <th>직급</th>
           <th>참여이력</th>
           <th>크루명 / 유형</th>
+          <th>모집상태</th>
           <th>총정원</th>
           <th>지원자</th>
           <th>메모</th>
-          <th>모집상태</th>
           <th>관리</th>
           <th>삭제</th>
         </tr>
@@ -447,14 +447,20 @@
       const hasMemo = d.memo && d.memo.trim() !== '';
       const count = getApplicantCount(d.크루명);
       return `
-        <tr class="row-top">
-          <td class="td-num" rowspan="2">${i + 1}</td>
+        <tr class="row-top" draggable="true" data-id="${d.id}">
+          <td class="td-num" rowspan="2" style="cursor:grab;">⠿ ${i + 1}</td>
           <td class="td-date" rowspan="2">${(d.신청일시||'-').replace(',','<br>')}</td>
           <td class="td-name" rowspan="2">${d.이름||'-'}</td>
           <td rowspan="2" style="font-size:12px;">${d.부서||'-'}</td>
           <td rowspan="2" style="font-size:12px; color:var(--gray-mid);">${d.직급||'-'}</td>
           <td rowspan="2"><span class="history-chip ${d.참여여부==='있음'?'history-yes':'history-no'}">${d.참여여부==='있음'?'있음':'없음'}</span></td>
           <td class="td-crew">${d.크루명||'-'}</td>
+          <td rowspan="2">
+            <div class="status-btns">
+              <button class="btn-recruit ${status==='모집중'?'active-recruit':''}" onclick="setStatus('${d.id}','모집중')">모집중</button>
+              <button class="btn-close ${status==='마감'?'active-close':''}" onclick="setStatus('${d.id}','마감')">마감</button>
+            </div>
+          </td>
           <td rowspan="2">${d.총정원||'-'}명</td>
           <td rowspan="2"><span class="applicant-count">👥 ${count}명</span></td>
           <td rowspan="2">
@@ -463,22 +469,42 @@
             </button>
           </td>
           <td rowspan="2">
-            <div class="status-btns">
-              <button class="btn-recruit ${status==='모집중'?'active-recruit':''}" onclick="setStatus('${d.id}','모집중')">모집중</button>
-              <button class="btn-close ${status==='마감'?'active-close':''}" onclick="setStatus('${d.id}','마감')">마감</button>
-            </div>
-          </td>
-          <td rowspan="2">
             <button class="btn-edit" onclick="openModal('${d.id}')">상세/수정</button>
           </td>
           <td rowspan="2">
             <button class="btn-delete" onclick="deleteEntry('${d.id}','${(d.이름||'').replace(/'/g,'\\\'')}')">삭제하기</button>
           </td>
         </tr>
-        <tr class="row-bottom">
+        <tr class="row-bottom" data-id="${d.id}">
           <td><span class="type-chip">${d.유형||'-'}</span></td>
         </tr>`;
     }).join('');
+
+    // 행 드래그 순서 조정
+    const tbody2 = document.getElementById('tableBody');
+    let dragRow = null;
+
+    tbody2.querySelectorAll('tr.row-top').forEach(row => {
+      row.addEventListener('dragstart', () => { dragRow = row; row.style.opacity = '0.5'; });
+      row.addEventListener('dragend', () => {
+        row.style.opacity = '1';
+        // 순서 변경 후 allData 재정렬 및 크루원 칸반 갱신
+        const newOrder = [...tbody2.querySelectorAll('tr.row-top')].map(r => r.dataset.id);
+        allData.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
+        renderTable(currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter));
+      });
+      row.addEventListener('dragover', e => { e.preventDefault(); });
+      row.addEventListener('drop', e => {
+        e.preventDefault();
+        if (dragRow && row !== dragRow) {
+          const nextRow = row.nextElementSibling;
+          row.parentNode.insertBefore(dragRow, row);
+          // row-bottom도 함께 이동
+          const dragBottom = tbody2.querySelector(`tr.row-bottom[data-id="${dragRow.dataset.id}"]`);
+          if (dragBottom) row.parentNode.insertBefore(dragBottom, row);
+        }
+      });
+    });
   }
 
   window.sortByDate = function() {
@@ -647,6 +673,8 @@
     if (idx !== -1) allData[idx].status = newStatus;
     const filtered = currentFilter === '전체' ? allData : allData.filter(d => (d.status||'대기중') === currentFilter);
     renderTable(filtered);
+    // 칸반 탭이면 바로 갱신
+    if (currentTab === 'member') renderKanban();
   };
 
   window.openModal = function(id) {
