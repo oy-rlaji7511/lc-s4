@@ -26,7 +26,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 48px;
-      background: rgba(242,239,234,0.93);
+      background: rgba(244,243,242,0.93);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
@@ -100,6 +100,9 @@
     textarea:focus,
     select:focus { border-color: var(--orange); background: white; }
     input::placeholder, textarea::placeholder { color: #ccc; }
+    select:invalid { color: #ccc; }
+    select option { color: var(--dark); }
+    select option[value=""] { color: #ccc; }
 
     /* RADIO */
     .radio-group { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -169,8 +172,7 @@
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">시즌 4</div>
+<div class="hero" style="background: #f4f3f2;">
   <img src="apply_title.png" alt="크루장 신청서" style="max-width:360px; width:80%; display:block; margin:0 auto 28px;" />
   <div style="
     max-width: 600px; margin: 0 auto;
@@ -215,6 +217,21 @@
       <div class="field">
         <label class="field-label">이름 <span class="required">*</span></label>
         <input type="text" name="이름" placeholder="이름을 입력해 주세요" required />
+      </div>
+      <div class="field">
+        <label class="field-label">직급 <span class="required">*</span></label>
+        <select name="직급" required style="color: var(--dark);">
+          <option value="" disabled selected style="color: #ccc;">직급을 선택해 주세요</option>
+          <option>Assistant</option>
+          <option>Jr.Specialist</option>
+          <option>Specialist</option>
+          <option>Professional</option>
+          <option>Jr.manager</option>
+          <option>Sr.Professional</option>
+          <option>Manager</option>
+          <option>Expert</option>
+          <option>Sr.Manager</option>
+        </select>
       </div>
       <div class="field">
         <label class="field-label">사번 <span class="required">*</span></label>
@@ -431,6 +448,10 @@
 
       // 검증
       const requiredFields = [
+        { name: '부서', label: '부서' },
+        { name: '이름', label: '이름' },
+        { name: '직급', label: '직급' },
+        { name: '사번', label: '사번' },
         { name: '참여여부', label: '1. 러닝크루 참여 여부', type: 'radio' },
         { name: '크루명', label: '2. 러닝크루명' },
         { name: '유형', label: '3. 희망하는 러닝크루 유형', type: 'radio' },
