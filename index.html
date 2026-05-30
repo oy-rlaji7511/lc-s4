@@ -141,7 +141,7 @@
     .types-notice { margin-top: 24px; font-size: 13px; color: #999; font-weight: 500; }
 
     /* HOW IT WORKS */
-    .how-section { background: var(--bg); }
+    .how-section { background: linear-gradient(180deg, #ffd4b8 0%, #ffe8d6 20%, #f4f3f2 60%); }
     .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
     .how-title-divider { display: none; }
     .how-card { background: white; border-radius: var(--radius); padding: 32px 28px; text-align: left; transition: transform 0.25s; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
@@ -396,6 +396,40 @@
       </div>
 
     </div>
+
+    <!-- 진행 일정 -->
+    <div style="margin-top: 56px;">
+      <p class="section-label" style="margin-bottom:12px;">Schedule</p>
+      <h2 class="section-title" style="margin-bottom:32px;">진행 일정</h2>
+      <div style="display:flex; gap:0; align-items:stretch;">
+
+        <!-- 크루장 모집 -->
+        <div style="flex:1; background:var(--dark); border-radius:20px 0 0 20px; padding:32px 28px; position:relative; overflow:hidden;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:3px; color:rgba(255,255,255,0.4); margin-bottom:16px;">STEP 01</div>
+          <div style="font-size:24px; font-weight:700; color:white; margin-bottom:10px;">크루장 모집</div>
+          <div style="font-size:26px; font-weight:700; color:var(--orange); line-height:1.3;">6/9<span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.5); margin:0 4px;">(화)</span>~6/15<span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.5); margin-left:4px;">(월)</span></div>
+          <div style="position:absolute; right:-10px; top:50%; transform:translateY(-50%); width:24px; height:24px; background:var(--bg); border-radius:50%; z-index:2;"></div>
+        </div>
+
+        <!-- 크루원 모집 -->
+        <div style="flex:1; background:var(--orange); padding:32px 28px; position:relative; overflow:hidden;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:3px; color:rgba(255,255,255,0.6); margin-bottom:16px;">STEP 02</div>
+          <div style="font-size:24px; font-weight:700; color:white; margin-bottom:10px;">크루원 모집</div>
+          <div style="font-size:26px; font-weight:700; color:white; line-height:1.3;">6/17<span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.7); margin:0 4px;">(수)</span>~6/25<span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.7); margin-left:4px;">(목)</span></div>
+          <div style="position:absolute; right:-10px; top:50%; transform:translateY(-50%); width:24px; height:24px; background:var(--bg); border-radius:50%; z-index:2;"></div>
+        </div>
+
+        <!-- OT / 스터디 활동 -->
+        <div style="flex:1; background:white; border-radius:0 20px 20px 0; padding:32px 28px; border: 2px solid #eee; border-left:none;">
+          <div style="font-size:11px; font-weight:700; letter-spacing:3px; color:#ccc; margin-bottom:16px;">STEP 03</div>
+          <div style="font-size:24px; font-weight:700; color:var(--dark); margin-bottom:10px;">OT / 스터디 활동</div>
+          <div style="font-size:20px; font-weight:700; color:var(--dark); line-height:1.4; white-space:nowrap;">7월 1주차 ~ 9월 4주차</div>
+          <div style="margin-top:10px; display:inline-block; background:var(--orange-pale); color:var(--orange); font-size:12px; font-weight:700; padding:4px 12px; border-radius:50px;">OT 포함 최대 13주</div>
+        </div>
+
+      </div>
+    </div>
+
     <div style="text-align:center; margin-top: 52px;">
       <a id="applyBtn" href="https://bit.ly/oy-learningcrew-leader" class="btn-primary" style="font-size:18px; padding:18px 56px; opacity:0.4; pointer-events:none; cursor:not-allowed;">크루장 지원하기 →</a>
       <div style="margin-top:28px;">
